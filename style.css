@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-snap-type: y proximity;
+}
+
+body {
+  background-color: #141414;
+  overflow: hidden;
+}
+  
+#image-track {
+  z-index: 2;
+  display: flex;
+  gap: 4vmin;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); 
+  user-select: none;
+}
+  
+.image {
+  width: 40vmin;
+  height: 56vmin;
+  object-fit: cover;
+  object-position: 50% center;
+  cursor: pointer;
+}
+
+.image.fullscreen {
+  z-index: 3;
+  gap: 4vmin;
+  position: absolute;
+  left: 0%;
+  top: 50%;
+  width: 100vw;
+  height: 100vh;
+  transform: translate(0%,-50%);
+  animation: Transition 1.2s ease;
+}
+
+@keyframes Transition {
+  from {
+    left: var(--start-x);
+    top: 50%;
+    width: 40vmin;
+    height: 56vmin;
+  }
+  to {
+    left: 0%;
+    top: 50%;
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+h1 {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,50%);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 500%;
+  font-family: Lucida Console, Monospace;
+  user-select: none;
+}
+
+section {
+  z-index: 1;
+  height: 100vh;
+  background-color: aqua;
+  scroll-snap-align: start;
+  user-select: none;
+}
+section:nth-child(1){
+  opacity: 0;
+}
+section:nth-child(odd){
+  background-color: red;
+}
+
+.animatedImage {
+  z-index: 4;
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translate(-50%,-50%) scale(0.1,0.1);
+  user-select: none;
+  animation: slideDown 2s forwards;
+  opacity: 95%;
+}
+
+@keyframes slideDown {
+  from {
+    top: -100px;
+  }
+  to {
+    top: 100px;
+  }
+}
