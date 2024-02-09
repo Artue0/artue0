@@ -60,20 +60,19 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleImageClick(event) {
       const selectedImage = event.target;
       const rect = selectedImage.getBoundingClientRect();
-      const imageCopy = selectedImage.cloneNode(true);
-      if (enableCode) {
-        if (imageCopy.classList.contains('image') && !imageCopy.classList.contains('fullscreen') && !animationDone){
-            enableCode = !enableCode;
-            animationDone = !animationDone;
-            document.body.appendChild(imageCopy);
-            imageCopy.classList.add('fullscreen');
-            imageCopy.style.setProperty('--start-x', rect.left + 'px');
-            document.body.style.overflowY = 'auto';
-        }
+    if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && !animationDone){
+        imageCopy = selectedImage.cloneNode(true);
+        enableCode = !enableCode;
+        //animationDone = !animationDone;
+        document.body.appendChild(imageCopy);
+        imageCopy.classList.add('fullscreen');
+        imageCopy.style.setProperty('--start-x', rect.left + 'px');
+        document.body.style.overflowY = 'auto';
+        //close.dataset.image_id = imageCopy;
     }
-      if (selectedImage.classList.contains('animatedImage')){
-        imageCopy.style.animation = 'Transition 1.8s ease reverse';
-      }
-      console.log(selectedImage);
+    if (selectedImage.classList.contains('button')){
+        imageCopy.classList.add('reverseFullscreen');
+        enableCode = !enableCode;
+    }
     }
 });

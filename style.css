@@ -31,7 +31,7 @@ body {
   cursor: pointer;
 }
 
-.image.fullscreen {
+.fullscreen {
   z-index: 3;
   gap: 4vmin;
   position: absolute;
@@ -55,6 +55,25 @@ body {
     top: 50%;
     width: 100vw;
     height: 100vh;
+  }
+}
+
+.reverseFullscreen {
+  animation: ReverseTransition 1.2s ease forwards;
+}
+
+@keyframes ReverseTransition {
+  from {
+    left: 0%;
+    top: 50%;
+    width: 100vw;
+    height: 100vh;
+  }
+  to {
+    left: var(--start-x);
+    top: 50%;
+    width: 40vmin;
+    height: 56vmin;
   }
 }
 
@@ -85,7 +104,7 @@ section:nth-child(odd){
   background-color: red;
 }
 
-.animatedImage {
+.button {
   z-index: 4;
   position: fixed;
   top: -100px;
