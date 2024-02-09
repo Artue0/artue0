@@ -60,19 +60,36 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleImageClick(event) {
       const selectedImage = event.target;
       const rect = selectedImage.getBoundingClientRect();
-    if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && !animationDone){
+      let topPage = true;
+    if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
         imageCopy = selectedImage.cloneNode(true);
         enableCode = !enableCode;
-        //animationDone = !animationDone;
         document.body.appendChild(imageCopy);
         imageCopy.classList.add('fullscreen');
         imageCopy.style.setProperty('--start-x', rect.left + 'px');
         document.body.style.overflowY = 'auto';
-        //close.dataset.image_id = imageCopy;
+        //const button = document.getElementsByClassName('button');
+        //button.classList.add('slideDown');
+        //console.log(button);
     }
     if (selectedImage.classList.contains('button')){
-        imageCopy.classList.add('reverseFullscreen');
-        enableCode = !enableCode;
+        if (topPage){
+            imageCopy.classList.add('reverseFullscreen');
+            enableCode = !enableCode;
+            setTimeout(function() {
+                imageCopy.parentNode.removeChild(imageCopy);
+            }, 1200);
+        }
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        if (window.scrollY === 0) {
+            topPage = true;
+        } else {
+            topPage = false;
+        }
+        console.log(window.scrollY)
     }
     }
 });

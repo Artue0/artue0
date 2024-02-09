@@ -109,10 +109,16 @@ section:nth-child(odd){
   position: fixed;
   top: -100px;
   left: 50%;
-  transform: translate(-50%,-50%) scale(0.1,0.1);
+  transform: translate(-50%,-50%);
   user-select: none;
-  animation: slideDown 2s forwards;
   opacity: 95%;
+  width: 50px;
+  mix-blend-mode: difference;
+  animation: slideDown 2s forwards;
+}
+
+.slideDown {
+  animation: slideDown 2s forwards;
 }
 
 @keyframes slideDown {
@@ -120,6 +126,6 @@ section:nth-child(odd){
     top: -100px;
   }
   to {
-    top: 100px;
+    top: 70px;
   }
 }
