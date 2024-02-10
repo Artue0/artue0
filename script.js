@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     if (selectedImage.classList.contains('button')){
         if (topPage){
+            document.body.style.overflowY = 'hidden';
             imageCopy.classList.add('reverseFullscreen');
             button.classList.remove('slideDown');
             button.classList.add('slideUp');
