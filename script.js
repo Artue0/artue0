@@ -61,6 +61,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const selectedImage = event.target;
       const rect = selectedImage.getBoundingClientRect();
       let topPage = true;
+      const button = document.getElementsByClassName('button')[0];
+      console.log(button);
     if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
         imageCopy = selectedImage.cloneNode(true);
         enableCode = !enableCode;
@@ -69,12 +71,15 @@ document.addEventListener('DOMContentLoaded', function () {
         imageCopy.style.setProperty('--start-x', rect.left + 'px');
         document.body.style.overflowY = 'auto';
         //const button = document.getElementsByClassName('button');
-        //button.classList.add('slideDown');
+        button.classList.remove('slideUp');
+        button.classList.add('slideDown');
         //console.log(button);
     }
     if (selectedImage.classList.contains('button')){
         if (topPage){
             imageCopy.classList.add('reverseFullscreen');
+            button.classList.remove('slideDown');
+            button.classList.add('slideUp');
             enableCode = !enableCode;
             setTimeout(function() {
                 imageCopy.parentNode.removeChild(imageCopy);
