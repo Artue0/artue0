@@ -85,7 +85,7 @@ h1 {
   display: flex;
   justify-content: center;
   color: white;
-  font-size: 7rem;
+  font-size: 60px;
   font-family: Lucida Console, Monospace;
   user-select: none;
   white-space: nowrap;
@@ -114,7 +114,8 @@ section:nth-child(odd){
   transform: translate(-50%,-50%);
   user-select: none;
   opacity: 95%;
-  width: 10vh;
+  width: 60px;
+  height: 60px;
   mix-blend-mode: difference;
 }
 
