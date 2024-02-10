@@ -114,7 +114,7 @@ section:nth-child(odd){
   transform: translate(-50%,-50%);
   user-select: none;
   opacity: 95%;
-  width: 5vmin;
+  width: 10vh;
   mix-blend-mode: difference;
 }
 
