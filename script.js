@@ -81,9 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
             imageCopy.classList.add('reverseFullscreen');
             button.classList.remove('slideDown');
             button.classList.add('slideUp');
-            enableCode = !enableCode;
             setTimeout(function() {
                 imageCopy.parentNode.removeChild(imageCopy);
+                enableCode = !enableCode;
             }, 1200);
         }
         window.scrollTo({
