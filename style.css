@@ -186,12 +186,32 @@ section:nth-child(odd){background-color: red;}
   font-family: Lucida Console, Monospace;
 }
 
-.icon:hover{
+#navbar a:hover .icon{
   color: white;
   transform: translateY(-10px);
 }
 
-.icon:hover .text{
+#navbar a:hover .text{
   opacity: 1;
   transform: translateY(20px);
+}
+
+@media screen and (max-width: 768px) {
+  #navbar{
+    border-radius: 0;
+  }
+  
+  #navbar a {
+    padding: 3vw 4vw;
+    width: 6.2vw;
+  }
+
+  .text {
+    font-size: 3vw;
+  }
+
+  h1 {
+    font-size: 7vw;
+    margin-top: 7vw;
+  }
 }
