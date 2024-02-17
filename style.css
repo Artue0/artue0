@@ -23,16 +23,14 @@ body {
   user-select: none;
 }
 
-.transition-effect {
-  transition: transform 0.5s ease-in-out, object-position 0.5s ease-in-out;
-}
-
 .image {
   width: 34vmin;
   height: 50vmin;
   object-fit: cover;
   object-position: 50% center;
   cursor: pointer;
+  border-radius: 16px;
+  box-shadow: 0 0 3rem;
 }
 
 .fullscreen {

@@ -104,10 +104,8 @@ function nav(endValue) {
     const maxDelta = window.innerWidth;
     let currentPercentage = parseFloat(track.dataset.percentage);
     
-    // Determine whether to add or subtract to reach the endValue
     const increment = endValue > currentPercentage ? 0.3 : -0.3;
     
-    // Update nextPercentage until it reaches the endValue
     let nextPercentage = currentPercentage;
     const updatePercentage = setInterval(() => {
         nextPercentage += increment;
@@ -120,7 +118,6 @@ function nav(endValue) {
             image.style.objectPosition = `${100 + nextPercentage}% center`;
         }
         
-        // Check if nextPercentage has reached endValue
         if ((increment > 0 && nextPercentage >= endValue) || (increment < 0 && nextPercentage <= endValue)) {
             clearInterval(updatePercentage);
         }
@@ -129,9 +126,9 @@ function nav(endValue) {
 }
 
 function home(){nav(-6.5);}
-function about(){nav(-6);}
-function projects(){nav(-100);}
-function portfolio(){nav(-100);}
-function contact(){nav(-100);}
-function music(){nav(-100);}
-function games(){nav(-100);}
+function about(){nav(-21);}
+function projects(){nav(-35.5);}
+function portfolio(){nav(-50);}
+function contact(){nav(-64.5);}
+function music(){nav(-79);}
+function games(){nav(-93.5);}
