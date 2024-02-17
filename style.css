@@ -22,10 +22,14 @@ body {
   transform: translate(-50%, -50%); 
   user-select: none;
 }
-  
+
+.transition-effect {
+  transition: transform 0.5s ease-in-out, object-position 0.5s ease-in-out;
+}
+
 .image {
-  width: 40vmin;
-  height: 56vmin;
+  width: 34vmin;
+  height: 50vmin;
   object-fit: cover;
   object-position: 50% center;
   cursor: pointer;
@@ -47,8 +51,8 @@ body {
   from {
     left: var(--start-x);
     top: 50%;
-    width: 40vmin;
-    height: 56vmin;
+    width: 34vmin;
+    height: 50vmin;
   }
   to {
     left: 0%;
@@ -58,9 +62,7 @@ body {
   }
 }
 
-.reverseFullscreen {
-  animation: ReverseTransition 1.2s ease forwards;
-}
+.reverseFullscreen {animation: ReverseTransition 1.2s ease forwards;}
 
 @keyframes ReverseTransition {
   from {
@@ -72,39 +74,38 @@ body {
   to {
     left: var(--start-x);
     top: 50%;
-    width: 40vmin;
-    height: 56vmin;
+    width: 34vmin;
+    height: 50vmin ;
   }
 }
 
 h1 {
   position: absolute;
+  top: 5%;
   left: 50%;
   transform: translate(-50%,50%);
+  width: 100vw;
   z-index: 3;
   display: flex;
   justify-content: center;
   color: white;
-  font-size: 60px;
+  font-size: 100px;
   font-family: Lucida Console, Monospace;
   user-select: none;
-  white-space: nowrap;
+
 }
 
 section {
   z-index: 1;
-  height: 100vmin;
+  min-height: 100vh;
   width: 100vw;
   background-color: aqua;
   scroll-snap-align: start;
   user-select: none;
 }
-section:nth-child(1){
-  opacity: 0;
-}
-section:nth-child(odd){
-  background-color: red;
-}
+
+section:nth-child(1){opacity: 0;}
+section:nth-child(odd){background-color: red;}
 
 .button {
   z-index: 4;
@@ -114,31 +115,85 @@ section:nth-child(odd){
   transform: translate(-50%,-50%);
   user-select: none;
   opacity: 95%;
-  width: 60px;
-  height: 60px;
+  width: 5vw;
   mix-blend-mode: difference;
 }
 
-.slideDown {
-  animation: slideDown 2s forwards;
-}
-.slideUp {
-  animation: slideUp 2s forwards;
-}
+.slideDown {animation: slideDown 1.8s forwards;}
+.slideUp {animation: slideUp 1.8s forwards;}
 
 @keyframes slideDown {
   from {
     top: -100px;
   }
   to {
-    top: 70px;
+    top: 100px;
   }
 }
 @keyframes slideUp {
   from {
-    top: 70px;
+    top: 100px;
   }
   to {
     top: -100px;
   }
+}
+
+#navbar {
+  background-color: #333;
+  overflow: hidden;
+  text-align: center;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  min-width: 25vw;
+  height: 65px;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+  border-radius: 0 0 30px 30px;
+}
+
+#navbar a {
+  color: white;
+  text-align: center;
+  padding: 14px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon {
+  margin-top: 15px;
+  width: 40px;
+  height: 30px;
+  color: #b3b3b3;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  user-select: none;
+  transition: opacity 0.2s ease, transform 0.3s ease;
+  text-align: center;
+  font-family: Lucida Console, Monospace;
+}
+
+.icon:hover{
+  color: white;
+  transform: translateY(-10px);
+}
+
+.icon:hover .text{
+  opacity: 1;
+  transform: translateY(20px);
 }

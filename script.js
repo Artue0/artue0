@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
-    var enableCode = true; // Flag to control code execution
-    var animationDone = false;
+    var enableCode = true;
 
     var handleOnDown = function (event) {
         track.dataset.mouseDownAt = event.clientX;
@@ -98,4 +97,41 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(window.scrollY)
     }
     }
+    
 });
+function nav(endValue) {
+    const track = document.getElementById("image-track");
+    const maxDelta = window.innerWidth;
+    let currentPercentage = parseFloat(track.dataset.percentage);
+    
+    // Determine whether to add or subtract to reach the endValue
+    const increment = endValue > currentPercentage ? 0.3 : -0.3;
+    
+    // Update nextPercentage until it reaches the endValue
+    let nextPercentage = currentPercentage;
+    const updatePercentage = setInterval(() => {
+        nextPercentage += increment;
+        track.dataset.percentage = nextPercentage;
+        
+        track.style.transform = `translate(${nextPercentage}%, -50%)`;
+        
+        const images = track.getElementsByClassName("image");
+        for (var image of images) {
+            image.style.objectPosition = `${100 + nextPercentage}% center`;
+        }
+        
+        // Check if nextPercentage has reached endValue
+        if ((increment > 0 && nextPercentage >= endValue) || (increment < 0 && nextPercentage <= endValue)) {
+            clearInterval(updatePercentage);
+        }
+    });
+    track.dataset.prevPercentage = endValue;
+}
+
+function home(){nav(-6.5);}
+function about(){nav(-6);}
+function projects(){nav(-100);}
+function portfolio(){nav(-100);}
+function contact(){nav(-100);}
+function music(){nav(-100);}
+function games(){nav(-100);}
