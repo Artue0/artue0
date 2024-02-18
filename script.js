@@ -1,4 +1,4 @@
-var savedImage;
+var savedImage = 0;
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
     var enableCode = true;
@@ -106,12 +106,14 @@ function nav(endValue, id) {
     }
     if (window.scrollY === 0) {
         if (savedImage !== 0) {
+            console.log("k");
             document.body.style.overflowY = 'hidden';
             savedImage.classList.add('reverseFullscreen');
             button.classList.remove('slideDown');
             button.classList.add('slideUp');
             setTimeout(function() {
                 savedImage.parentNode.removeChild(savedImage);
+                savedImage = 0;
             }, 1200);
         }
         const updatePercentage = setInterval(() => {
@@ -142,14 +144,6 @@ function nav(endValue, id) {
     }
     track.dataset.prevPercentage = endValue;
 }
-
-function home(){nav(-6.5, "home");}
-function about(){nav(-21, "about");}
-function projects(){nav(-35.5, "projects");}
-function portfolio(){nav(-50, "portfolio");}
-function contact(){nav(-64.5, "contact");}
-function music(){nav(-79, "music");}
-function games(){nav(-93.5, "games");}
 
 function home(){nav(-6.5, "home");}
 function about(){nav(-21, "about");}
