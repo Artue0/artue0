@@ -1,3 +1,4 @@
+var savedImage;
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
     var enableCode = true;
@@ -57,81 +58,103 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function handleImageClick(event) {
-      const selectedImage = event.target;
-      const rect = selectedImage.getBoundingClientRect();
-      let topPage = true;
-      const button = document.getElementsByClassName('button')[0];
-    if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
-        imageCopy = selectedImage.cloneNode(true);
-        enableCode = !enableCode;
-        document.body.appendChild(imageCopy);
-        imageCopy.classList.add('fullscreen');
-        imageCopy.style.setProperty('--start-x', rect.left + 'px');
-        document.body.style.overflowY = 'auto';
-        button.classList.remove('slideUp');
-        button.classList.add('slideDown');
-    }
-    if (selectedImage.classList.contains('button')){
-        if (topPage){
-            document.body.style.overflowY = 'hidden';
-            imageCopy.classList.add('reverseFullscreen');
-            button.classList.remove('slideDown');
-            button.classList.add('slideUp');
-            setTimeout(function() {
-                imageCopy.parentNode.removeChild(imageCopy);
-                enableCode = !enableCode;
-            }, 1200);
+        const selectedImage = event.target;
+        const rect = selectedImage.getBoundingClientRect();
+        const button = document.getElementsByClassName('button')[0];
+        if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
+            imageCopy = selectedImage.cloneNode(true);
+            savedImage = imageCopy;
+            enableCode = !enableCode;
+            document.body.appendChild(imageCopy);
+            imageCopy.classList.add('fullscreen');
+            imageCopy.style.setProperty('--start-x', rect.left + 'px');
+            document.body.style.overflowY = 'auto';
+            button.classList.remove('slideUp');
+            button.classList.add('slideDown');
         }
+        if (selectedImage.classList.contains('button')){
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+            if (window.scrollY === 0) {
+                document.body.style.overflowY = 'hidden';
+                imageCopy.classList.add('reverseFullscreen');
+                button.classList.remove('slideDown');
+                button.classList.add('slideUp');
+                setTimeout(function() {
+                    imageCopy.parentNode.removeChild(imageCopy);
+                    enableCode = !enableCode;
+                }, 1200);
+            }
+        }
+    }
+    
+});
+
+function nav(endValue, id) {
+    const track = document.getElementById("image-track");
+    let currentPercentage = parseFloat(track.dataset.percentage);
+    const button = document.getElementsByClassName('button')[0];
+    const increment = endValue > currentPercentage ? 0.3 : -0.3;
+    let nextPercentage = currentPercentage;
+    if (window.scrollY !== 0) {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
-        if (window.scrollY === 0) {
-            topPage = true;
-        } else {
-            topPage = false;
-        }
-        console.log(window.scrollY)
     }
+    if (window.scrollY === 0) {
+        if (savedImage !== 0) {
+            document.body.style.overflowY = 'hidden';
+            savedImage.classList.add('reverseFullscreen');
+            button.classList.remove('slideDown');
+            button.classList.add('slideUp');
+            setTimeout(function() {
+                savedImage.parentNode.removeChild(savedImage);
+            }, 1200);
+        }
+        const updatePercentage = setInterval(() => {
+            nextPercentage += increment;
+            track.dataset.percentage = nextPercentage;
+            
+            track.style.transform = `translate(${nextPercentage}%, -50%)`;
+            
+            const images = track.getElementsByClassName("image");
+            for (var image of images) {
+                image.style.objectPosition = `${100 + nextPercentage}% center`;
+            }
+            
+            if ((increment > 0 && nextPercentage >= endValue) || (increment < 0 && nextPercentage <= endValue)) {
+                clearInterval(updatePercentage);
+                const image = document.getElementById(id);
+                const rect = image.getBoundingClientRect();
+                imageCopy = image.cloneNode(true);
+                savedImage = imageCopy;
+                document.body.appendChild(imageCopy);
+                imageCopy.classList.add('fullscreen');
+                imageCopy.style.setProperty('--start-x', rect.left + 'px');
+                document.body.style.overflowY = 'auto';
+                button.classList.remove('slideUp');
+                button.classList.add('slideDown');
+            }
+        });
     }
-    
-});
-function nav(endValue, id) {
-    const track = document.getElementById("image-track");
-    const maxDelta = window.innerWidth;
-    const rect = selectedImage.getBoundingClientRect();
-    let currentPercentage = parseFloat(track.dataset.percentage);
-    
-    const increment = endValue > currentPercentage ? 0.3 : -0.3;
-    
-    let nextPercentage = currentPercentage;
-    const updatePercentage = setInterval(() => {
-        nextPercentage += increment;
-        track.dataset.percentage = nextPercentage;
-        
-        track.style.transform = `translate(${nextPercentage}%, -50%)`;
-        
-        const images = track.getElementsByClassName("image");
-        for (var image of images) {
-            image.style.objectPosition = `${100 + nextPercentage}% center`;
-        }
-        
-        if ((increment > 0 && nextPercentage >= endValue) || (increment < 0 && nextPercentage <= endValue)) {
-            clearInterval(updatePercentage);
-            enableCode = !enableCode;
-            document.body.appendChild(id);
-            id.classList.add('fullscreen');
-            id.style.setProperty('--start-x', rect.left + 'px');
-            document.body.style.overflowY = 'auto';
-        }
-    });
     track.dataset.prevPercentage = endValue;
 }
 
-function home(){nav(-6.5, home);}
-function about(){nav(-21, about);}
-function projects(){nav(-35.5, projects);}
-function portfolio(){nav(-50, portfolio);}
-function contact(){nav(-64.5, contact);}
-function music(){nav(-79, music);}
-function games(){nav(-93.5, games);}
+function home(){nav(-6.5, "home");}
+function about(){nav(-21, "about");}
+function projects(){nav(-35.5, "projects");}
+function portfolio(){nav(-50, "portfolio");}
+function contact(){nav(-64.5, "contact");}
+function music(){nav(-79, "music");}
+function games(){nav(-93.5, "games");}
+
+function home(){nav(-6.5, "home");}
+function about(){nav(-21, "about");}
+function projects(){nav(-35.5, "projects");}
+function portfolio(){nav(-50, "portfolio");}
+function contact(){nav(-64.5, "contact");}
+function music(){nav(-79, "music");}
+function games(){nav(-93.5, "games");}
