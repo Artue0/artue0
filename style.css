@@ -30,7 +30,7 @@ body {
   object-position: 50% center;
   cursor: pointer;
   border-radius: 16px;
-  box-shadow: 0 0 3rem;
+  box-shadow: 0 0 4rem;
 }
 
 .fullscreen {

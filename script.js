@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const rect = selectedImage.getBoundingClientRect();
       let topPage = true;
       const button = document.getElementsByClassName('button')[0];
-      console.log(button);
     if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
         imageCopy = selectedImage.cloneNode(true);
         enableCode = !enableCode;
@@ -69,10 +68,8 @@ document.addEventListener('DOMContentLoaded', function () {
         imageCopy.classList.add('fullscreen');
         imageCopy.style.setProperty('--start-x', rect.left + 'px');
         document.body.style.overflowY = 'auto';
-        //const button = document.getElementsByClassName('button');
         button.classList.remove('slideUp');
         button.classList.add('slideDown');
-        //console.log(button);
     }
     if (selectedImage.classList.contains('button')){
         if (topPage){
@@ -99,9 +96,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
 });
-function nav(endValue) {
+function nav(endValue, id) {
     const track = document.getElementById("image-track");
     const maxDelta = window.innerWidth;
+    const rect = selectedImage.getBoundingClientRect();
     let currentPercentage = parseFloat(track.dataset.percentage);
     
     const increment = endValue > currentPercentage ? 0.3 : -0.3;
@@ -120,15 +118,20 @@ function nav(endValue) {
         
         if ((increment > 0 && nextPercentage >= endValue) || (increment < 0 && nextPercentage <= endValue)) {
             clearInterval(updatePercentage);
+            enableCode = !enableCode;
+            document.body.appendChild(id);
+            id.classList.add('fullscreen');
+            id.style.setProperty('--start-x', rect.left + 'px');
+            document.body.style.overflowY = 'auto';
         }
     });
     track.dataset.prevPercentage = endValue;
 }
 
-function home(){nav(-6.5);}
-function about(){nav(-21);}
-function projects(){nav(-35.5);}
-function portfolio(){nav(-50);}
-function contact(){nav(-64.5);}
-function music(){nav(-79);}
-function games(){nav(-93.5);}
+function home(){nav(-6.5, home);}
+function about(){nav(-21, about);}
+function projects(){nav(-35.5, projects);}
+function portfolio(){nav(-50, portfolio);}
+function contact(){nav(-64.5, contact);}
+function music(){nav(-79, music);}
+function games(){nav(-93.5, games);}
