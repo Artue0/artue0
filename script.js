@@ -2,6 +2,7 @@ var savedImage = 0;
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
     var enableCode = true;
+    track.dataset.percentage = -50;
 
     var handleOnDown = function (event) {
         track.dataset.mouseDownAt = event.clientX;
@@ -89,44 +90,48 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
-    
 });
 
 function nav(endValue, id) {
     const track = document.getElementById("image-track");
     let currentPercentage = parseFloat(track.dataset.percentage);
     const button = document.getElementsByClassName('button')[0];
-    const increment = endValue > currentPercentage ? 0.3 : -0.3;
+    const increment = endValue > currentPercentage ? 0.35 : -0.35;
     let nextPercentage = currentPercentage;
+
     if (window.scrollY !== 0) {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     }
-    if (window.scrollY === 0) {
-        if (savedImage !== 0) {
-            console.log("k");
-            document.body.style.overflowY = 'hidden';
-            savedImage.classList.add('reverseFullscreen');
-            button.classList.remove('slideDown');
-            button.classList.add('slideUp');
-            setTimeout(function() {
-                savedImage.parentNode.removeChild(savedImage);
-                savedImage = 0;
-            }, 1200);
-        }
+    if (savedImage === 0) {
+        startUpdatePercentage();
+    } else {
+        setTimeout(startUpdatePercentage, 1000);
+
+        document.body.style.overflowY = 'hidden';
+        savedImage.classList.add('reverseFullscreen');
+        button.classList.remove('slideDown');
+        button.classList.add('slideUp');
+        setTimeout(function() {
+            savedImage.parentNode.removeChild(savedImage);
+            savedImage = 0;
+        }, 1000);
+    }
+
+    function startUpdatePercentage() {
         const updatePercentage = setInterval(() => {
             nextPercentage += increment;
             track.dataset.percentage = nextPercentage;
-            
+
             track.style.transform = `translate(${nextPercentage}%, -50%)`;
-            
+
             const images = track.getElementsByClassName("image");
             for (var image of images) {
                 image.style.objectPosition = `${100 + nextPercentage}% center`;
             }
-            
+
             if ((increment > 0 && nextPercentage >= endValue) || (increment < 0 && nextPercentage <= endValue)) {
                 clearInterval(updatePercentage);
                 const image = document.getElementById(id);
@@ -142,6 +147,7 @@ function nav(endValue, id) {
             }
         });
     }
+
     track.dataset.prevPercentage = endValue;
 }
 
