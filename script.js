@@ -1,4 +1,6 @@
 var savedImage = 0;
+let activeIcon = 0;
+let navTop = false;
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
     var enableCode = true;
@@ -90,9 +92,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
+
+    const icons = document.querySelectorAll(".icon");
+    icons.forEach(icon => {
+        icon.addEventListener("click", function() {
+            this.classList.add("active");
+            activeIcon = this;
+        });
+    });
 });
 
 function nav(endValue, id) {
+    iconMenu = false;
     const track = document.getElementById("image-track");
     let currentPercentage = parseFloat(track.dataset.percentage);
     const button = document.getElementsByClassName('button')[0];
@@ -114,6 +125,8 @@ function nav(endValue, id) {
         savedImage.classList.add('reverseFullscreen');
         button.classList.remove('slideDown');
         button.classList.add('slideUp');
+        activeIcon.classList.remove("active");
+        navTop = false;
         setTimeout(function() {
             savedImage.parentNode.removeChild(savedImage);
             savedImage = 0;
@@ -144,6 +157,7 @@ function nav(endValue, id) {
                 document.body.style.overflowY = 'auto';
                 button.classList.remove('slideUp');
                 button.classList.add('slideDown');
+                navTop = true;
             }
         });
     }
@@ -151,10 +165,47 @@ function nav(endValue, id) {
     track.dataset.prevPercentage = endValue;
 }
 
-function home(){nav(-6.5, "home");}
-function about(){nav(-21, "about");}
-function projects(){nav(-35.5, "projects");}
-function portfolio(){nav(-50, "portfolio");}
-function contact(){nav(-64.5, "contact");}
-function music(){nav(-79, "music");}
-function games(){nav(-93.5, "games");}
+function menu() {
+    console.log("y");
+    const button = document.getElementsByClassName('button')[0];
+    navTop = false;
+    if (window.scrollY !== 0) {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+    document.body.style.overflowY = 'hidden';
+    savedImage.classList.add('reverseFullscreen');
+    button.classList.remove('slideDown');
+    button.classList.add('slideUp');
+    activeIcon.classList.remove("active");
+    setTimeout(function() {
+        savedImage.parentNode.removeChild(savedImage);
+        savedImage = 0;
+    }, 1000);
+}
+
+function home(clickedElement){
+    if (clickedElement !== activeIcon){
+        nav(-6.5, "home");
+    } else { menu(); }
+}
+function about(clickedElement){
+    nav(-21, "about");
+}
+function projects(clickedElement){
+    nav(-35.5, "projects");
+}
+function portfolio(clickedElement){
+    nav(-50, "portfolio");
+}
+function contact(clickedElement){
+    nav(-64.5, "contact");
+}
+function music(clickedElement){
+    nav(-79, "music");
+}
+function games(clickedElement){
+    nav(-93.5, "games");
+}

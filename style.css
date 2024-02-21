@@ -171,12 +171,12 @@ section:nth-child(odd){background-color: red;}
   font-family: Lucida Console, Monospace;
 }
 
-.icon:hover {
+.icon:hover, .icon.active {
   color: white;
   transform: translateY(-10px);
 }
 
-.icon:hover .text {
+.icon:hover .text, .icon.active .text {
   opacity: 1;
   transform: translateY(20px);
 }
