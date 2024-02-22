@@ -1,6 +1,7 @@
 var savedImage = 0;
 let activeIcon = 0;
 let navTop = false;
+let hideIcon = true;
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
     var enableCode = true;
@@ -96,14 +97,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const icons = document.querySelectorAll(".icon");
     icons.forEach(icon => {
         icon.addEventListener("click", function() {
-            this.classList.add("active");
+            if (hideIcon) {this.classList.add("active");}
             activeIcon = this;
         });
     });
 });
 
 function nav(endValue, id) {
-    iconMenu = false;
+    hideIcon = true;
     const track = document.getElementById("image-track");
     let currentPercentage = parseFloat(track.dataset.percentage);
     const button = document.getElementsByClassName('button')[0];
@@ -167,6 +168,7 @@ function nav(endValue, id) {
 
 function menu() {
     console.log("y");
+    hideIcon = false;
     const button = document.getElementsByClassName('button')[0];
     navTop = false;
     if (window.scrollY !== 0) {
@@ -187,25 +189,30 @@ function menu() {
 }
 
 function home(clickedElement){
-    if (clickedElement !== activeIcon){
-        nav(-6.5, "home");
-    } else { menu(); }
+    if (!navTop){nav(-6.5, "home");}
+    if (clickedElement === activeIcon && navTop) { menu(); }
 }
 function about(clickedElement){
-    nav(-21, "about");
+    if (!navTop){nav(-21, "about");}
+    if (clickedElement === activeIcon && navTop) { menu(); }
 }
 function projects(clickedElement){
-    nav(-35.5, "projects");
+    if (!navTop){nav(-35.5, "projects");}
+    if (clickedElement === activeIcon && navTop) { menu(); }
 }
 function portfolio(clickedElement){
-    nav(-50, "portfolio");
+    if (!navTop){nav(-50, "portfolio");}
+    if (clickedElement === activeIcon && navTop) { menu(); }
 }
 function contact(clickedElement){
-    nav(-64.5, "contact");
+    if (!navTop){nav(-64.5, "contact");}
+    if (clickedElement === activeIcon && navTop) { menu(); }
 }
 function music(clickedElement){
-    nav(-79, "music");
+    if (!navTop){nav(-79, "music");}
+    if (clickedElement === activeIcon && navTop) { menu(); }
 }
 function games(clickedElement){
-    nav(-93.5, "games");
+    if (!navTop){nav(-93.5, "games");}
+    if (clickedElement === activeIcon && navTop) { menu(); }
 }
