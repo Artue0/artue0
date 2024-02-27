@@ -12,7 +12,7 @@ body {
 #image-track {
   z-index: 2;
   display: flex;
-  gap: 4vmin;
+  gap: 6vmin;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -27,7 +27,7 @@ body {
   object-position: 50% center;
   cursor: pointer;
   border-radius: 16px;
-  box-shadow: 0 0 4rem #151515;
+  box-shadow: 0 0 4rem #222222;
 }
 
 .fullscreen {
@@ -108,11 +108,9 @@ section:nth-child(odd){background-color: red;}
   position: fixed;
   top: -100px;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%) scale(1.5);
   user-select: none;
-  opacity: 95%;
-  width: 5vw;
-  mix-blend-mode: difference;
+  color: white;
 }
 
 .slideDown {animation: slideDown 1.8s forwards;}
@@ -183,6 +181,20 @@ section:nth-child(odd){background-color: red;}
 .icon:hover .text, .icon.active .text {
   opacity: 1;
   transform: translateY(20px);
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #262626;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #303030;
 }
 
 @media screen and (max-width: 768px) {
