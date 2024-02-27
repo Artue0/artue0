@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     window.addEventListener('mousedown', function (event) {
+        console.log(navTop);
         handleOnDown(event);
         handleImageClick(event);
     });
@@ -72,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.appendChild(imageCopy);
             imageCopy.classList.add('fullscreen');
             imageCopy.style.setProperty('--start-x', rect.left + 'px');
-            document.body.style.overflowY = 'auto';
             button.classList.remove('slideUp');
             button.classList.add('slideDown');
         }
@@ -82,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 behavior: 'smooth'
             });
             if (window.scrollY === 0) {
-                document.body.style.overflowY = 'hidden';
                 imageCopy.classList.add('reverseFullscreen');
                 button.classList.remove('slideDown');
                 button.classList.add('slideUp');
@@ -120,9 +119,8 @@ function nav(endValue, id) {
     if (savedImage === 0) {
         startUpdatePercentage();
     } else {
-        setTimeout(startUpdatePercentage, 1000);
-
-        document.body.style.overflowY = 'hidden';
+        setTimeout(startUpdatePercentage, 1200);
+        
         savedImage.classList.add('reverseFullscreen');
         button.classList.remove('slideDown');
         button.classList.add('slideUp');
@@ -131,7 +129,7 @@ function nav(endValue, id) {
         setTimeout(function() {
             savedImage.parentNode.removeChild(savedImage);
             savedImage = 0;
-        }, 1000);
+        }, 1200);
     }
 
     function startUpdatePercentage() {
@@ -155,7 +153,6 @@ function nav(endValue, id) {
                 document.body.appendChild(imageCopy);
                 imageCopy.classList.add('fullscreen');
                 imageCopy.style.setProperty('--start-x', rect.left + 'px');
-                document.body.style.overflowY = 'auto';
                 button.classList.remove('slideUp');
                 button.classList.add('slideDown');
                 navTop = true;
@@ -167,7 +164,7 @@ function nav(endValue, id) {
 }
 
 function menu() {
-    console.log("y");
+    console.log("menu");
     hideIcon = false;
     const button = document.getElementsByClassName('button')[0];
     navTop = false;
@@ -177,7 +174,6 @@ function menu() {
             behavior: 'smooth'
         });
     }
-    document.body.style.overflowY = 'hidden';
     savedImage.classList.add('reverseFullscreen');
     button.classList.remove('slideDown');
     button.classList.add('slideUp');
@@ -185,34 +181,34 @@ function menu() {
     setTimeout(function() {
         savedImage.parentNode.removeChild(savedImage);
         savedImage = 0;
-    }, 1000);
+    }, 1200);
 }
 
 function home(clickedElement){
-    if (!navTop){nav(-6.5, "home");}
     if (clickedElement === activeIcon && navTop) { menu(); }
+    else {nav(-6.5, "home");}
 }
 function about(clickedElement){
-    if (!navTop){nav(-21, "about");}
     if (clickedElement === activeIcon && navTop) { menu(); }
+    else {nav(-21, "about");}
 }
 function projects(clickedElement){
-    if (!navTop){nav(-35.5, "projects");}
     if (clickedElement === activeIcon && navTop) { menu(); }
+    else {nav(-35.5, "projects");}
 }
 function portfolio(clickedElement){
-    if (!navTop){nav(-50, "portfolio");}
     if (clickedElement === activeIcon && navTop) { menu(); }
+    else {nav(-50, "portfolio");}
 }
 function contact(clickedElement){
-    if (!navTop){nav(-64.5, "contact");}
     if (clickedElement === activeIcon && navTop) { menu(); }
+    else {nav(-64.5, "contact");}
 }
 function music(clickedElement){
-    if (!navTop){nav(-79, "music");}
     if (clickedElement === activeIcon && navTop) { menu(); }
+    else {nav(-79, "music");}
 }
 function games(clickedElement){
-    if (!navTop){nav(-93.5, "games");}
     if (clickedElement === activeIcon && navTop) { menu(); }
+    else {nav(-93.5, "games");}
 }
