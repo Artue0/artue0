@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const handleOnMove = function (event) {
-        if (track.dataset.mouseDownAt === "0" || !enableCode) return;
+        if (track.dataset.mouseDownAt === "0" || !enableCode || event.target.id === "myRange") return;
 
         const mouseDelta = parseFloat(track.dataset.mouseDownAt) - event.clientX;
         const maxDelta = window.innerWidth;
@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var image of images) {
             image.style.objectPosition = `${100 + nextPercentage}% center`;
         }
+        console.log(nextPercentage)
     };
 
     window.addEventListener('mousedown', function (event) {
-        console.log(navTop);
         handleOnDown(event);
         handleImageClick(event);
     });
@@ -99,6 +99,21 @@ document.addEventListener('DOMContentLoaded', function () {
             if (hideIcon) {this.classList.add("active");}
             activeIcon = this;
         });
+    });
+
+    const myRange = document.getElementById("myRange");
+
+    myRange.addEventListener("input", function(event) {
+        const sliderValue = parseInt(event.target.value);
+        const nextPercentage = sliderValue * -1 /10;
+
+        track.dataset.percentage = nextPercentage;
+        track.style.transform = `translate(${nextPercentage}%, -50%)`;
+
+        const images = track.getElementsByClassName("image");
+        for (var image of images) {
+            image.style.objectPosition = `${100 + nextPercentage}% center`;
+        }
     });
 });
 
@@ -164,7 +179,6 @@ function nav(endValue, id) {
 }
 
 function menu() {
-    console.log("menu");
     hideIcon = false;
     const button = document.getElementsByClassName('button')[0];
     navTop = false;
