@@ -101,20 +101,20 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    const myRange = document.getElementById("myRange");
+    // const myRange = document.getElementById("myRange");
 
-    myRange.addEventListener("input", function(event) {
-        const sliderValue = parseInt(event.target.value);
-        const nextPercentage = sliderValue * -1 /10;
+    // myRange.addEventListener("input", function(event) {
+    //     const sliderValue = parseInt(event.target.value);
+    //     const nextPercentage = sliderValue * -1 /10;
 
-        track.dataset.percentage = nextPercentage;
-        track.style.transform = `translate(${nextPercentage}%, -50%)`;
+    //     track.dataset.percentage = nextPercentage;
+    //     track.style.transform = `translate(${nextPercentage}%, -50%)`;
 
-        const images = track.getElementsByClassName("image");
-        for (var image of images) {
-            image.style.objectPosition = `${100 + nextPercentage}% center`;
-        }
-    });
+    //     const images = track.getElementsByClassName("image");
+    //     for (var image of images) {
+    //         image.style.objectPosition = `${100 + nextPercentage}% center`;
+    //     }
+    // });
 });
 
 function nav(endValue, id) {
