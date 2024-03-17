@@ -2,6 +2,7 @@ var savedImage = 0;
 let activeIcon = 0;
 let navTop = false;
 let hideIcon = true;
+let isMoving = false;
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
     var enableCode = true;
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const handleOnMove = function (event) {
-        if (track.dataset.mouseDownAt === "0" || !enableCode || event.target.id === "myRange") return;
+        if (track.dataset.mouseDownAt === "0" || !enableCode || event.target.id === "myRange" || isMoving) return;
 
         const mouseDelta = parseFloat(track.dataset.mouseDownAt) - event.clientX;
         const maxDelta = window.innerWidth;
@@ -34,12 +35,12 @@ document.addEventListener('DOMContentLoaded', function () {
         for (var image of images) {
             image.style.objectPosition = `${100 + nextPercentage}% center`;
         }
-        console.log(nextPercentage)
     };
 
     window.addEventListener('mousedown', function (event) {
         handleOnDown(event);
         handleImageClick(event);
+        console.log(isMoving);
     });
 
     window.addEventListener('touchstart', function (event) {
@@ -96,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const icons = document.querySelectorAll(".icon");
     icons.forEach(icon => {
         icon.addEventListener("click", function() {
-            if (hideIcon) {this.classList.add("active");}
+            if (hideIcon && !isMoving) {this.classList.add("active");}
             activeIcon = this;
         });
     });
@@ -118,7 +119,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function nav(endValue, id) {
+    if(isMoving){return;}
+    console.log("started");
     hideIcon = true;
+    isMoving = true;
     const track = document.getElementById("image-track");
     let currentPercentage = parseFloat(track.dataset.percentage);
     const button = document.getElementsByClassName('button')[0];
@@ -171,6 +175,8 @@ function nav(endValue, id) {
                 button.classList.remove('slideUp');
                 button.classList.add('slideDown');
                 navTop = true;
+                console.log("finished");
+                isMoving = false;
             }
         });
     }
