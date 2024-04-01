@@ -10,114 +10,150 @@
 <body>
     <div id="navbar">
         <div class="icon" onclick="home(this)">
-            <i class="fa-solid fa-computer fa-2xl"></i>
+            <i class="fa-solid fa-computer fa-2xl setup"></i>
             <div class="text">SETUP</div>
         </div>
         <div class="icon" onclick="about(this)">
-            <i class="fa-solid fa-cat fa-2xl"></i>
+            <i class="fa-solid fa-cat fa-2xl cats"></i>
             <div class="text">CATS</div>
         </div>
         <div class="icon" onclick="projects(this)">
-            <i class="fa-solid fa-code fa-2xl"></i>
+            <i class="fa-solid fa-code fa-2xl projects"></i>
             <div class="text">PROJECTS</div>
         </div>
         <div class="icon" onclick="portfolio(this)">
-            <i class="fa-solid fa-user fa-2xl"></i>
+            <i class="fa-solid fa-user fa-2xl portfolio"></i>
             <div class="text">PORTFOLIO</div>
         </div>
         <div class="icon" onclick="contact(this)">
-            <i class="fa-solid fa-phone fa-2xl"></i>
+            <i class="fa-solid fa-phone fa-2xl links"></i>
             <div class="text">LINKS</div>
         </div>
         <div class="icon" onclick="music(this)">
-            <i class="fa-solid fa-music fa-2xl"></i>
+            <i class="fa-solid fa-music fa-2xl music"></i>
             <div class="text">MUSIC</div>
         </div>
         <div class="icon" onclick="games(this)">
-            <i class="fa-solid fa-game-console-handheld fa-2xl"></i>
+            <i class="fa-solid fa-game-console-handheld fa-2xl games"></i>
             <div class="text">GAMES</div>
         </div>          
     </div>       
     <main>
-        <h1>WELCOME TO MY WEBSITE!</h1>
-        <h2>WHAT WOUDL YOU LIKE TO SEE?</h2>
+        <h1 class="hidden hidden-up">WELCOME TO MY WEBSITE!</h1>
+        <h2 class="hidden hidden-up">WHAT WOUDL YOU LIKE TO SEE?</h2>
         <div id="bar">
-            <div class="container">
-                <div class="icon2" onclick="home(this)">
+            <div class="container hidden hidden-blur">
+                <div class="icon2" onclick="home(null)">
                     <i class="fa-solid fa-computer fa-2xl"></i>
                 </div>
-                <p>MY</p>
-                <p>SETUP</p>
+                <div class="text-container">
+                    <p>MY</p>
+                    <p>SETUP</p>
+                </div>
             </div>
-            <div class="container">
-                <div class="icon2" onclick="about(this)">
+            <div class="container hidden hidden-blur">
+                <div class="icon2" onclick="about(null)">
                     <i class="fa-solid fa-cat fa-2xl"></i>
                 </div>
-                <p>COOL</p>
-                <p>CATS</p>
+                <div class="text-container">
+                    <p>COOL</p>
+                    <p>CATS</p>
+                </div>
             </div>
-            <div class="container">
-                <div class="icon2" onclick="projects(this)">
+            <div class="container hidden hidden-blur">
+                <div class="icon2" onclick="projects(null)">
                     <i class="fa-solid fa-code fa-2xl"></i>
                 </div>
-                <p>PROJECTS</p>
-                <p>I MADE</p>
+                <div class="text-container">
+                    <p>PROJECTS</p>
+                    <p>I MADE</p>
+                </div>
             </div>
-            <div class="container">
-                <div class="icon2" onclick="portfolio(this)">
+            <div class="container hidden hidden-blur">
+                <div class="icon2" onclick="portfolio(null)">
                     <i class="fa-solid fa-user fa-2xl"></i>
                 </div>
-                <p>ABOUT THIS</p>
-                <p>WEBSITE</p>
+                <div class="text-container">
+                    <p>ABOUT THIS</p>
+                    <p>WEBSITE</p>
+                </div>
             </div>
-            <div class="container">
-                <div class="icon2" onclick="contact(this)">
+            <div class="container hidden hidden-blur">
+                <div class="icon2" onclick="contact(null)">
                     <i class="fa-solid fa-phone fa-2xl"></i>
                 </div>
-                <p>SOME</p>
-                <p>LINKS</p>
+                <div class="text-container">
+                    <p>SOME</p>
+                    <p>LINKS</p>
+                </div>
             </div>
-            <div class="container">
-                <div class="icon2" onclick="music(this)">
+            <div class="container hidden hidden-blur">
+                <div class="icon2" onclick="music(null)">
                     <i class="fa-solid fa-music fa-2xl"></i>
                 </div>
-                <p>MUSIC I</p>
-                <p>LISTEN TO</p>
+                <div class="text-container">
+                    <p>MUSIC I</p>
+                    <p>LISTEN TO</p>
+                </div>
             </div>
-            <div class="container">
-                <div class="icon2" onclick="games(this)">
+            <div class="container hidden hidden-blur">
+                <div class="icon2" onclick="games(null)">
                     <i class="fa-solid fa-game-console-handheld fa-2xl"></i>
                 </div> 
-                <p>GAMES</p>
-                <p>I PLAY</p>
+                <div class="text-container">
+                    <p>GAMES</p>
+                    <p>I PLAY</p>
+                </div>
             </div>        
-        </div>   
+        </div>
+
+        <h3 id="about-me" class="hidden hidden-blur">-ABOUT ME-</h3>
+        <h3 id="hi" class="hidden hidden-blur">
+            Hi! I'm Artur and i like making cool stuff like this website.
+            <i class="fa-solid fa-hand-wave fa-2xl hand hidden"></i>
+        </h3>
+        <h3 class="game-dev about-me-text hidden hidden-left">
+            I'm a game developer
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat lectus augue, et laoreet sem dignissim vel. In hac habitasse platea dictumst.</p>
+        </h3>
+        <h3 class="playing-games about-me-text hidden hidden-right">
+            And I like playing games
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat lectus augue, et laoreet sem dignissim vel.</p>
+        </h3>
+        <h3 class="web-dev about-me-text hidden hidden-left">
+            I'm also a web developer
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat lectus augue, et laoreet sem dignissim vel. In hac habitasse platea dictumst. et laoreet sem dignissim vel. In hac habitasse platea dictumst.</p>
+        </h3>
+        <h3 class="artist about-me-text hidden hidden-right">
+            Along with that I create 3D animations
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat lectus augue, et laoreet sem dignissim vel. In hac habitasse platea dictumst.</p>
+        </h3>
     </main>
     <i class="fa-solid fa-circle-xmark fa-2xl button"></i>
     <div id="image-track" data-mouse-down-at="0" data-prev-percentage="-50">
         <img class="image" id="home" src="assets/music.jpg" draggable="false">
-        <img class="image" id="about" src="assets/music3.jpg" draggable="false">
-        <img class="image" id="projects" src="assets/1.jpg" draggable="false">
-        <img class="image" id="portfolio" src="assets/5.png" draggable="false">
-        <img class="image" id="contact" src="assets/2v2.png" draggable="false">
-        <img class="image" id="music" src="assets/projects.png" draggable="false">
+        <img class="image hidden hidden-up" id="about" src="assets/music3.jpg" draggable="false">
+        <img class="image hidden hidden-up" id="projects" src="assets/1.jpg" draggable="false">
+        <img class="image hidden hidden-up" id="portfolio" src="assets/5.png" draggable="false">
+        <img class="image hidden hidden-up" id="contact" src="assets/2v2.png" draggable="false">
+        <img class="image hidden hidden-up" id="music" src="assets/projects.png" draggable="false">
         <img class="image" id="games" src="assets/music.jpg" draggable="false">
     </div>
-    <div class="animation">
+    <div class="animation hidden hidden-blur">
         <i class="fa-solid fa-arrow-pointer fa-2xl"></i>
         <div class="circle"></div>
     </div>
-    <div id="image-container">
+    <div id="image-container" class="hidden hidden-blur">
         <div class="small-image"></div>
         <div class="small-image"></div>
         <div class="small-image"></div>
         <div class="small-image"></div>
         <div class="small-image"></div>
     </div>
-    <div id="animation2">
+    <div id="animation2" class="hidden hidden-blur">
         <i class="fa-solid fa-arrow-pointer fa-2xl"></i>
         <div class="circle2"></div>
     </div>
-    <div id="big-image"></div>
+    <div id="big-image" class="hidden hidden-blur"></div>
     <script src="script.js"></script>
 </body>

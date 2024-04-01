@@ -3,6 +3,7 @@ let activeIcon = 0;
 let navTop = false;
 let hideIcon = true;
 let isMoving = false;
+let clickedIcon = null;
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
     var enableCode = true;
@@ -18,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const handleOnMove = function (event) {
-        if (track.dataset.mouseDownAt === "0" || !enableCode || event.target.id === "myRange" || isMoving) return;
+        if (track.dataset.mouseDownAt === "0" || !enableCode) return;
 
         const mouseDelta = parseFloat(track.dataset.mouseDownAt) - event.clientX;
         const maxDelta = window.innerWidth;
@@ -40,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('mousedown', function (event) {
         handleOnDown(event);
         handleImageClick(event);
-        console.log(isMoving);
     });
 
     window.addEventListener('touchstart', function (event) {
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 button.classList.add('slideUp');
                 setTimeout(function() {
                     imageCopy.parentNode.removeChild(imageCopy);
-                    enableCode = !enableCode;
+                    if (!navTop) {enableCode = !enableCode;}
                 }, 1200);
             }
         }
@@ -118,9 +118,46 @@ document.addEventListener('DOMContentLoaded', function () {
     // });
 });
 
-function nav(endValue, id) {
+
+function home(clickedElement){
+    clickedIcon = document.getElementsByClassName('setup')[0];
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    else {nav(-6.5, "home", clickedIcon);}
+}
+function about(clickedElement){
+    clickedIcon = document.getElementsByClassName('cats')[0];
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    else {nav(-21, "about", clickedIcon);}
+}
+function projects(clickedElement){
+    clickedIcon = document.getElementsByClassName('projects')[0];
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    else {nav(-35.5, "projects", clickedIcon);}
+}
+function portfolio(clickedElement){
+    clickedIcon = document.getElementsByClassName('portfolio')[0];
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    else {nav(-50, "portfolio", clickedIcon);}
+}
+function contact(clickedElement){
+    clickedIcon = document.getElementsByClassName('links')[0];
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    else {nav(-64.5, "contact", clickedIcon);}
+}
+function music(clickedElement){
+    clickedIcon = document.getElementsByClassName('music')[0];
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    else {nav(-79, "music", clickedIcon);}
+}
+function games(clickedElement){
+    clickedIcon = document.getElementsByClassName('games')[0];
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    else {nav(-93.5, "games", clickedIcon);}
+}
+
+function nav(endValue, id, clickedElement) {
     if(isMoving){return;}
-    console.log("started");
+
     hideIcon = true;
     isMoving = true;
     const track = document.getElementById("image-track");
@@ -128,6 +165,15 @@ function nav(endValue, id) {
     const button = document.getElementsByClassName('button')[0];
     const increment = endValue > currentPercentage ? 0.35 : -0.35;
     let nextPercentage = currentPercentage;
+    const activeElements = document.querySelectorAll('.active');
+
+    activeElements.forEach(element => {
+        element.classList.remove('active');
+    });
+
+    if (!clickedElement.classList.contains('active')) {
+        clickedElement.classList.add('active');
+    }
 
     if (window.scrollY !== 0) {
         window.scrollTo({
@@ -139,11 +185,10 @@ function nav(endValue, id) {
         startUpdatePercentage();
     } else {
         setTimeout(startUpdatePercentage, 1200);
-        
         savedImage.classList.add('reverseFullscreen');
         button.classList.remove('slideDown');
         button.classList.add('slideUp');
-        activeIcon.classList.remove("active");
+        clickedElement.classList.add("active");
         navTop = false;
         setTimeout(function() {
             savedImage.parentNode.removeChild(savedImage);
@@ -175,16 +220,15 @@ function nav(endValue, id) {
                 button.classList.remove('slideUp');
                 button.classList.add('slideDown');
                 navTop = true;
-                console.log("finished");
                 isMoving = false;
             }
         });
     }
-
+    console.log(clickedElement);
     track.dataset.prevPercentage = endValue;
 }
 
-function menu() {
+function menu(clickedElement) {
     hideIcon = false;
     const button = document.getElementsByClassName('button')[0];
     navTop = false;
@@ -197,38 +241,20 @@ function menu() {
     savedImage.classList.add('reverseFullscreen');
     button.classList.remove('slideDown');
     button.classList.add('slideUp');
-    activeIcon.classList.remove("active");
+    clickedElement.classList.remove("active");
     setTimeout(function() {
         savedImage.parentNode.removeChild(savedImage);
         savedImage = 0;
     }, 1200);
 }
 
-function home(clickedElement){
-    if (clickedElement === activeIcon && navTop) { menu(); }
-    else {nav(-6.5, "home");}
-}
-function about(clickedElement){
-    if (clickedElement === activeIcon && navTop) { menu(); }
-    else {nav(-21, "about");}
-}
-function projects(clickedElement){
-    if (clickedElement === activeIcon && navTop) { menu(); }
-    else {nav(-35.5, "projects");}
-}
-function portfolio(clickedElement){
-    if (clickedElement === activeIcon && navTop) { menu(); }
-    else {nav(-50, "portfolio");}
-}
-function contact(clickedElement){
-    if (clickedElement === activeIcon && navTop) { menu(); }
-    else {nav(-64.5, "contact");}
-}
-function music(clickedElement){
-    if (clickedElement === activeIcon && navTop) { menu(); }
-    else {nav(-79, "music");}
-}
-function games(clickedElement){
-    if (clickedElement === activeIcon && navTop) { menu(); }
-    else {nav(-93.5, "games");}
-}
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry => {
+        if(entry.isIntersecting) {
+            entry.target.classList.add('show');
+        }
+    }));
+});
+
+const hiddenElements = document.querySelectorAll('.hidden');
+hiddenElements.forEach((el) => observer.observe(el));

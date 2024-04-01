@@ -13,7 +13,52 @@ body {
   font-family: FoundryGridnikRegular;
   src: url(assets/FoundryGridnik\ Regular.otf);
 }
-  
+
+.hidden {transition: opacity 1s, filter 1s, transform 1s;}
+
+.hidden-left {
+  opacity: 0;
+  transform: translateX(-50%);
+  filter: blur(5px);
+}
+
+.hidden-right {
+  opacity: 0;
+  transform: translateX(50%);
+  filter: blur(5px);
+}
+
+.hidden-up {
+  opacity: 0;
+  transform: translateY(15%);
+  filter: blur(5px);
+}
+
+.hidden-blur {
+  opacity: 0;
+  filter: blur(5px);
+}
+
+.show {
+  transform: translateX(0);
+  opacity: 1;
+  filter: blur(0);
+}
+
+.image:nth-child(2) { transition-delay: 400ms; }
+.image:nth-child(3) { transition-delay: 600ms; }
+.image:nth-child(4) { transition-delay: 800ms; }
+.image:nth-child(5) { transition-delay: 1000ms; }
+.image:nth-child(6) { transition-delay: 1200ms; }
+
+.container:nth-child(1) { transition-delay: 200ms; }
+.container:nth-child(2) { transition-delay: 400ms; }
+.container:nth-child(3) { transition-delay: 600ms; }
+.container:nth-child(4) { transition-delay: 800ms; }
+.container:nth-child(5) { transition-delay: 1000ms; }
+.container:nth-child(6) { transition-delay: 1200ms; }
+.container:nth-child(7) { transition-delay: 1400ms; }
+
 #image-track {
   z-index: 2;
   display: flex;
@@ -83,7 +128,8 @@ body {
 
 main{
   display: grid;
-  grid-template-rows: repeat(30, 10vh);
+  grid-template-rows: repeat(40, 10vh);
+  grid-template-columns: repeat(9, 1fr);
 }
 
 #bar {
@@ -92,7 +138,8 @@ main{
   align-items: center;
   overflow: hidden;
   text-align: center;
-  grid-row: 12 / span 2;
+  grid-row: 13 / span 2;
+  grid-column: span 9;
   min-width: 40vw;
   /* border: red 2px solid; */
   gap: 35px;
@@ -135,13 +182,17 @@ main{
   /* border: red 2px solid; */
 }
 
-.container p {
-  transform: translateY(160%);
-  white-space: normal;
+.text-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  white-space: nowrap;
 }
 
 h1 {
   grid-row: 2;
+  grid-column: span 9;
   z-index: 3;
   display: flex;
   justify-content: center;
@@ -152,7 +203,8 @@ h1 {
 }
 
 h2 {
-  grid-row: 11;
+  grid-row: 12;
+  grid-column: span 9;
   z-index: 3;
   display: flex;
   justify-content: center;
@@ -207,6 +259,16 @@ h2 {
   z-index: 999;
   border-radius: 0 0 30px 30px;
   box-shadow: 0 0 4rem #222222;
+  animation: navbar-showup 1.5s ease;
+}
+
+@keyframes navbar-showup {
+  from{
+    transform: translate(-50%,-100%);
+  }
+  to{
+    transform: translate(-50%,0);
+  }
 }
 
 .icon {
@@ -215,12 +277,13 @@ h2 {
   width: 40px;
   height: 50px;
   color: #b3b3b3;
-  transition: color 0.3s ease, transform 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
+.icon i{transition: color 0.3s ease, transform 0.3s ease;}
 
 .text {
   color: white;
@@ -232,14 +295,14 @@ h2 {
   font-family: Lucida Console, Monospace;
 }
 
-.icon:hover, .icon.active {
+.icon:hover i, .active {
   color: white;
   transform: translateY(-10px);
 }
 
-.icon:hover .text, .icon.active .text {
+.icon:hover .text, .active + .text {
   opacity: 1;
-  transform: translateY(20px);
+  transform: translateY(15px);
 }
 
 ::-webkit-scrollbar {
@@ -410,6 +473,80 @@ h2 {
     width: 40px;
     height: 60px;
   }
+}
+
+#about-me {
+  grid-row: 16;
+  grid-column: span 9;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 6rem;
+  font-family: FoundryGridnikRegular;
+}
+
+#hi {
+  grid-row: 19;
+  grid-column: 3 / span 5;
+  color: white;
+  font-size: 4rem;
+  font-family: Lucida Console, Monospace;
+  letter-spacing: 1px;
+  text-align: center;
+  /* border: 2px red solid; */
+  transform: translateX(-8%);
+}
+
+.hand {
+  position: absolute;
+  left: 100%;
+  transform-origin: right bottom;
+  animation: hand-waving 1.5s infinite ease-in-out;
+  height: 50%;
+}
+
+@keyframes hand-waving {
+  0% {
+    transform: rotate(20deg);
+  }
+  50% {
+      transform: rotate(-20deg);
+  }
+  100% {
+      transform: rotate(20deg);
+  }
+}
+
+.about-me-text {
+  color: white;
+  font-size: 6rem;
+  font-family: FoundryGridnikRegular;
+}
+
+.about-me-text p {
+  font-size: 3rem;
+  font-family: Lucida Console, Monospace;
+  text-align: justify;
+}
+
+.game-dev {
+  grid-row: 22 / span 2;
+  grid-column: 2 / span 5;
+}
+
+.playing-games {
+  grid-row: 26 / span 2;
+  grid-column: 4 / span 5;
+}
+
+.web-dev {
+  grid-row: 30 / span 2;
+  grid-column: 2 / span 5;
+}
+
+.artist {
+  grid-row: 35 / span 2;
+  grid-column: 4 / span 5;
 }
 
 @media screen and (max-width: 900px) {
