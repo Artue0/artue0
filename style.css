@@ -78,6 +78,7 @@ body {
   cursor: pointer;
   border-radius: 16px;
   box-shadow: 0 0 4rem #222222;
+  /* opacity: 0.1; */
 }
 
 .fullscreen {
@@ -126,7 +127,7 @@ body {
   }
 }
 
-main{
+#main-page{
   display: grid;
   grid-template-rows: repeat(40, 10vh);
   grid-template-columns: repeat(9, 1fr);
@@ -191,15 +192,16 @@ main{
 }
 
 h1 {
-  grid-row: 2;
-  grid-column: span 9;
   z-index: 3;
   display: flex;
   justify-content: center;
   color: white;
+  width: 100vw;
   font-size: 6rem;
+  margin-top: 10vh;
   font-family: FoundryGridnikRegular;
   user-select: none;
+  /* border: red 2px solid; */
 }
 
 h2 {
@@ -567,4 +569,20 @@ h2 {
     width: 34vmax;
     height: 50vmax;
   }
+}
+
+.invisible {opacity: 0;}
+
+.title {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  color: white;
+  width: 100vw;
+  font-size: 6rem;
+  position: absolute;
+  top: 10vh;
+  font-family: FoundryGridnikRegular;
+  user-select: none;
+  /* border: red 2px solid; */
 }

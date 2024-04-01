@@ -4,6 +4,15 @@ let navTop = false;
 let hideIcon = true;
 let isMoving = false;
 let clickedIcon = null;
+var mainPage = document.getElementById("main-page");
+var catPage = document.getElementById("cat-page");
+var pcPage = document.getElementById("pc-page");
+var musicPage = document.getElementById("music-page");
+var gamesPage = document.getElementById("games-page");
+var projectsPage = document.getElementById("projects-page");
+var websitePage = document.getElementById("website-page");
+var linksPage = document.getElementById("links-page");
+
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
     var enableCode = true;
@@ -90,6 +99,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     imageCopy.parentNode.removeChild(imageCopy);
                     if (!navTop) {enableCode = !enableCode;}
                 }, 1200);
+                mainPage.classList.remove('invisible');
+                pcPage.classList.add('invisible');
+                catPage.classList.add('invisible');
+                projectsPage.classList.add('invisible');
+                websitePage.classList.add('invisible');
+                linksPage.classList.add('invisible');
+                musicPage.classList.add('invisible');
+                gamesPage.classList.add('invisible');
             }
         }
     }
@@ -122,40 +139,40 @@ document.addEventListener('DOMContentLoaded', function () {
 function home(clickedElement){
     clickedIcon = document.getElementsByClassName('setup')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-6.5, "home", clickedIcon);}
+    else {nav(-6.5, "home", clickedIcon, pcPage);}
 }
 function about(clickedElement){
     clickedIcon = document.getElementsByClassName('cats')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-21, "about", clickedIcon);}
+    else {nav(-21, "about", clickedIcon, catPage);}
 }
 function projects(clickedElement){
     clickedIcon = document.getElementsByClassName('projects')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-35.5, "projects", clickedIcon);}
+    else {nav(-35.5, "projects", clickedIcon, projectsPage);}
 }
 function portfolio(clickedElement){
     clickedIcon = document.getElementsByClassName('portfolio')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-50, "portfolio", clickedIcon);}
+    else {nav(-50, "portfolio", clickedIcon, websitePage);}
 }
 function contact(clickedElement){
     clickedIcon = document.getElementsByClassName('links')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-64.5, "contact", clickedIcon);}
+    else {nav(-64.5, "contact", clickedIcon, linksPage);}
 }
 function music(clickedElement){
     clickedIcon = document.getElementsByClassName('music')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-79, "music", clickedIcon);}
+    else {nav(-79, "music", clickedIcon, musicPage);}
 }
 function games(clickedElement){
     clickedIcon = document.getElementsByClassName('games')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-93.5, "games", clickedIcon);}
+    else {nav(-93.5, "games", clickedIcon, gamesPage);}
 }
 
-function nav(endValue, id, clickedElement) {
+function nav(endValue, id, clickedElement, page) {
     if(isMoving){return;}
 
     hideIcon = true;
@@ -194,6 +211,14 @@ function nav(endValue, id, clickedElement) {
             savedImage.parentNode.removeChild(savedImage);
             savedImage = 0;
         }, 1200);
+        mainPage.classList.add('invisible');
+        pcPage.classList.add('invisible');
+        catPage.classList.add('invisible');
+        projectsPage.classList.add('invisible');
+        websitePage.classList.add('invisible');
+        linksPage.classList.add('invisible');
+        musicPage.classList.add('invisible');
+        gamesPage.classList.add('invisible');
     }
 
     function startUpdatePercentage() {
@@ -221,6 +246,9 @@ function nav(endValue, id, clickedElement) {
                 button.classList.add('slideDown');
                 navTop = true;
                 isMoving = false;
+                setTimeout(function() {
+                    page.classList.remove('invisible');
+                }, 1000);
             }
         });
     }
@@ -229,6 +257,14 @@ function nav(endValue, id, clickedElement) {
 }
 
 function menu(clickedElement) {
+    mainPage.classList.remove('invisible');
+    pcPage.classList.add('invisible');
+    catPage.classList.add('invisible');
+    projectsPage.classList.add('invisible');
+    websitePage.classList.add('invisible');
+    linksPage.classList.add('invisible');
+    musicPage.classList.add('invisible');
+    gamesPage.classList.add('invisible');
     hideIcon = false;
     const button = document.getElementsByClassName('button')[0];
     navTop = false;
