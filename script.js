@@ -12,10 +12,14 @@ var gamesPage = document.getElementById("games-page");
 var projectsPage = document.getElementById("projects-page");
 var websitePage = document.getElementById("website-page");
 var linksPage = document.getElementById("links-page");
+var enableCode = true;
+var downMenu = false;
+var forceMenu = false;
+const icons = document.querySelectorAll(".icon, .container");
+let selectedIcon = null;
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
-    var enableCode = true;
     track.dataset.percentage = -50;
 
     var handleOnDown = function (event) {
@@ -66,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
+        // console.log("selectedIcon: ", selectedIcon);
     });
 
     window.addEventListener('touchmove', function (event) {
@@ -85,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
             imageCopy.style.setProperty('--start-x', rect.left + 'px');
             button.classList.remove('slideUp');
             button.classList.add('slideDown');
+            navTop = false;
         }
         if (selectedImage.classList.contains('button')){
             window.scrollTo({
@@ -107,17 +113,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 linksPage.classList.add('invisible');
                 musicPage.classList.add('invisible');
                 gamesPage.classList.add('invisible');
+
+                const activeElements = document.querySelectorAll('.active');
+                activeElements.forEach(element => {
+                    element.classList.remove('active');
+                });
             }
         }
     }
-
-    const icons = document.querySelectorAll(".icon");
-    icons.forEach(icon => {
-        icon.addEventListener("click", function() {
-            if (hideIcon && !isMoving) {this.classList.add("active");}
-            activeIcon = this;
-        });
-    });
 
     // const myRange = document.getElementById("myRange");
 
@@ -135,48 +138,88 @@ document.addEventListener('DOMContentLoaded', function () {
     // });
 });
 
+icons.forEach(icon => {
+    icon.addEventListener("click", function() {
+        if (icon.classList.contains("container")) {
+            console.log("icon constains container");
+            switch (true) {
+                case icon.classList.contains("cPc"):
+                    selectedIcon = document.getElementById("iconPc");
+                    break;
+                case icon.classList.contains("cCats"):
+                    selectedIcon = document.getElementById("iconCats");
+                    break;
+                case icon.classList.contains("cProjects"):
+                    selectedIcon = document.getElementById("iconProjects");
+                    break;
+                case icon.classList.contains("cWebsite"):
+                    selectedIcon = document.getElementById("iconWensite"); // corrected typo here
+                    break;
+                case icon.classList.contains("cLinks"):
+                    selectedIcon = document.getElementById("iconLinks");
+                    break;
+                case icon.classList.contains("cMusic"):
+                    selectedIcon = document.getElementById("iconMusic");
+                    break;
+                case icon.classList.contains("cGames"):
+                    selectedIcon = document.getElementById("iconGames");
+                    break;
+            }            
+            if (hideIcon && !isMoving) {selectedIcon.classList.add("active");}
+            activeIcon = selectedIcon;
+        } else{
+            if (hideIcon && !isMoving) {this.classList.add("active");}
+            activeIcon = this;
+        }
+    });
+});
 
 function home(clickedElement){
     clickedIcon = document.getElementsByClassName('setup')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-6.5, "home", clickedIcon, pcPage);}
+    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement != activeIcon) {nav(-6.5, "home", clickedIcon, pcPage);}
+    if (clickedElement === null) {activeIcon = clickedElement;}
 }
 function about(clickedElement){
     clickedIcon = document.getElementsByClassName('cats')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-21, "about", clickedIcon, catPage);}
+    if (clickedElement === activeIcon && navTop || forceMenu) { menu(clickedIcon); }
+    if (clickedElement != activeIcon && !forceMenu) {nav(-21, "about", clickedIcon, catPage);}
+    if (clickedElement === null) {activeIcon = clickedElement;}
 }
 function projects(clickedElement){
     clickedIcon = document.getElementsByClassName('projects')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-35.5, "projects", clickedIcon, projectsPage);}
+    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement != activeIcon) {nav(-35.5, "projects", clickedIcon, projectsPage);}
 }
 function portfolio(clickedElement){
     clickedIcon = document.getElementsByClassName('portfolio')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-50, "portfolio", clickedIcon, websitePage);}
+    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement != activeIcon) {nav(-50, "portfolio", clickedIcon, websitePage);}
 }
 function contact(clickedElement){
     clickedIcon = document.getElementsByClassName('links')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-64.5, "contact", clickedIcon, linksPage);}
+    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement != activeIcon) {nav(-64.5, "contact", clickedIcon, linksPage);}
 }
 function music(clickedElement){
     clickedIcon = document.getElementsByClassName('music')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-79, "music", clickedIcon, musicPage);}
+    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement != activeIcon) {nav(-79, "music", clickedIcon, musicPage);}
 }
 function games(clickedElement){
     clickedIcon = document.getElementsByClassName('games')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    else {nav(-93.5, "games", clickedIcon, gamesPage);}
+    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement != activeIcon) {nav(-93.5, "games", clickedIcon, gamesPage);}
 }
 
 function nav(endValue, id, clickedElement, page) {
+    console.log("nav");
     if(isMoving){return;}
+    if(downMenu){forceMenu = true;}
 
     hideIcon = true;
     isMoving = true;
+    enableCode = false;
     const track = document.getElementById("image-track");
     let currentPercentage = parseFloat(track.dataset.percentage);
     const button = document.getElementsByClassName('button')[0];
@@ -248,6 +291,8 @@ function nav(endValue, id, clickedElement, page) {
                 isMoving = false;
                 setTimeout(function() {
                     page.classList.remove('invisible');
+                    mainPage.classList.add('invisible');
+
                 }, 1000);
             }
         });
@@ -257,6 +302,7 @@ function nav(endValue, id, clickedElement, page) {
 }
 
 function menu(clickedElement) {
+    console.log("menu");
     mainPage.classList.remove('invisible');
     pcPage.classList.add('invisible');
     catPage.classList.add('invisible');
@@ -274,15 +320,24 @@ function menu(clickedElement) {
             behavior: 'smooth'
         });
     }
-    savedImage.classList.add('reverseFullscreen');
+    if (savedImage) { // Check if savedImage is not null or undefined
+        savedImage.classList.add('reverseFullscreen');
+    }
     button.classList.remove('slideDown');
     button.classList.add('slideUp');
-    clickedElement.classList.remove("active");
-    setTimeout(function() {
-        savedImage.parentNode.removeChild(savedImage);
-        savedImage = 0;
+    if (clickedElement) { // Ensure clickedElement is defined
+        clickedElement.classList.remove("active");
+    }
+    enableCode = true;
+    setTimeout(function () {
+        if (savedImage) { // Check if savedImage is not null or undefined
+            savedImage.parentNode.removeChild(savedImage);
+            savedImage = 0;
+        }
+        forceMenu = false;
     }, 1200);
 }
+
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry => {

@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 body {
@@ -129,9 +130,10 @@ body {
 
 #main-page{
   display: grid;
-  grid-template-rows: repeat(40, 10vh);
   grid-template-columns: repeat(9, 1fr);
 }
+
+.see {margin-bottom: 5vh;}
 
 #bar {
   display: flex;
@@ -139,9 +141,9 @@ body {
   align-items: center;
   overflow: hidden;
   text-align: center;
-  grid-row: 13 / span 2;
   grid-column: span 9;
   min-width: 40vw;
+  height: 130px;
   /* border: red 2px solid; */
   gap: 35px;
   position: relative;
@@ -149,12 +151,15 @@ body {
 
 .icon2 {
   position: absolute;
-  top: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 45px;
   aspect-ratio: 1;
   border: 3.5px white solid;
   border-radius: 6px;
   transition: 0.2s;
+  transform: translateY(45%);
 }
 
 .icon2:hover {
@@ -174,9 +179,7 @@ body {
   height: 100%;
   width: 90px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
   color: white;
   font-size: 14px;
   font-family: Lucida Console, Monospace;
@@ -184,11 +187,8 @@ body {
 }
 
 .text-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
   white-space: nowrap;
+  transform: translateY(60%);
 }
 
 h1 {
@@ -199,13 +199,13 @@ h1 {
   width: 100vw;
   font-size: 6rem;
   margin-top: 10vh;
+  margin-bottom: 90vh;
   font-family: FoundryGridnikRegular;
   user-select: none;
   /* border: red 2px solid; */
 }
 
 h2 {
-  grid-row: 12;
   grid-column: span 9;
   z-index: 3;
   display: flex;
@@ -406,13 +406,13 @@ h2 {
   100% {transform: translateX(-50%);}
 }
 
-#animation2 {
+.animation2 {
   position: absolute;
   left: 60%;
   top: 87vh;
 }
 
-#animation2 i{
+.animation2 i{
   animation: arrow2 6s infinite;
   transform-origin: top left;
 }
@@ -478,30 +478,31 @@ h2 {
 }
 
 #about-me {
-  grid-row: 16;
   grid-column: span 9;
   display: flex;
   justify-content: center;
   color: white;
   font-size: 6rem;
   font-family: FoundryGridnikRegular;
+  margin-bottom: 5vh;
 }
 
 #hi {
-  grid-row: 19;
   grid-column: 3 / span 5;
   color: white;
   font-size: 4rem;
   font-family: Lucida Console, Monospace;
   letter-spacing: 1px;
-  text-align: center;
+  text-align: justify;
   /* border: 2px red solid; */
   transform: translateX(-8%);
+  margin-bottom: 25vh;
 }
 
 .hand {
   position: absolute;
-  left: 100%;
+  left: 110%;
+  top: 50%;
   transform-origin: right bottom;
   animation: hand-waving 1.5s infinite ease-in-out;
   height: 50%;
@@ -509,13 +510,13 @@ h2 {
 
 @keyframes hand-waving {
   0% {
-    transform: rotate(20deg);
+    transform: rotate(15deg);
   }
   50% {
-      transform: rotate(-20deg);
+      transform: rotate(-15deg);
   }
   100% {
-      transform: rotate(20deg);
+      transform: rotate(15deg);
   }
 }
 
@@ -523,6 +524,7 @@ h2 {
   color: white;
   font-size: 6rem;
   font-family: FoundryGridnikRegular;
+  text-align: start;
 }
 
 .about-me-text p {
@@ -531,45 +533,72 @@ h2 {
   text-align: justify;
 }
 
-.game-dev {
-  grid-row: 22 / span 2;
-  grid-column: 2 / span 5;
-}
+.game-dev {grid-column: 2 / span 5;}
+.playing-games {grid-column: 4 / span 5;}
+.web-dev {grid-column: 2 / span 5;}
+.artist {grid-column: 4 / span 5;}
 
-.playing-games {
-  grid-row: 26 / span 2;
-  grid-column: 4 / span 5;
-}
-
-.web-dev {
-  grid-row: 30 / span 2;
-  grid-column: 2 / span 5;
-}
-
-.artist {
-  grid-row: 35 / span 2;
-  grid-column: 4 / span 5;
-}
+#bar, .game-dev, .playing-games, .web-dev, .artist{margin-bottom: 25vh;}
 
 @media screen and (max-width: 900px) {
   #navbar {
-      border-radius: 0;
+    border-radius: 0;
+    width: 100%;
   }
 
   #navbar > div {
-      padding: 3vw 4vw;
-      width: 6.2vw;
+    width: 6vw;
   }
 
   .text {
-      font-size: 3vw;
+    font-size: 3vw;
   }
 
   .image {
     width: 34vmax;
     height: 50vmax;
   }
+
+  .animation {
+    left: 35%;
+  }
+
+  #image-container {
+    left: 35%;
+  }
+
+  .animation2  {
+    left: 75%;
+  }
+
+  #big-image {
+    left: 75%;
+  }
+
+  #bar {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: auto auto auto;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+  }
+  
+  .container {grid-column: auto;}
+  
+  .cGames {
+    grid-column: 2 / span 1;
+    grid-row: 3;
+  }
 }
+
+@media screen and (max-width: 1285px) {h1 {font-size: 5rem;}}
+@media screen and (max-width: 1080px) {h1 {margin-top: 6vh;}}
+@media screen and (max-width: 525px) {h1 {
+  font-size: 4rem;
+  margin-top: 8vh;
+}}
+
 
 .invisible {opacity: 0;}
 
