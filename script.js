@@ -12,6 +12,7 @@ var gamesPage = document.getElementById("games-page");
 var projectsPage = document.getElementById("projects-page");
 var websitePage = document.getElementById("website-page");
 var linksPage = document.getElementById("links-page");
+let page;
 var enableCode = true;
 var forceMenu = false;
 const icons = document.querySelectorAll(".icon");
@@ -69,30 +70,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
-        console.log("navTop: ", navTop);
-        console.log("activeIcon: ", activeIcon);
+        // console.log("navTop: ", navTop);
+        // console.log("activeIcon: ", activeIcon);
     });
 
     window.addEventListener('touchmove', function (event) {
         handleOnMove(event.touches[0]);
     });
-
-    
-
-    // const myRange = document.getElementById("myRange");
-
-    // myRange.addEventListener("input", function(event) {
-    //     const sliderValue = parseInt(event.target.value);
-    //     const nextPercentage = sliderValue * -1 /10;
-
-    //     track.dataset.percentage = nextPercentage;
-    //     track.style.transform = `translate(${nextPercentage}%, -50%)`;
-
-    //     const images = track.getElementsByClassName("image");
-    //     for (var image of images) {
-    //         image.style.objectPosition = `${100 + nextPercentage}% center`;
-    //     }
-    // });
 });
 
 function handleImageClick(event) {
@@ -110,8 +94,14 @@ function handleImageClick(event) {
         button.classList.add('slideDown');
         navTop = true;
         imageCopy.style.boxShadow = "none";
+        imageCopy.classList.remove("imageAnim");
+        imageCopy.classList.add("visible");
         // hideIcon = true;
         // isMoving = false;
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     }
     if (selectedImage.classList.contains('button')){
         window.scrollTo({
@@ -127,6 +117,7 @@ function handleImageClick(event) {
                 imageCopy.parentNode.removeChild(imageCopy);
                 enableCode = !enableCode;
             }, 1200);
+
             mainPage.classList.remove('invisible');
             pcPage.classList.add('invisible');
             catPage.classList.add('invisible');
@@ -146,26 +137,46 @@ function handleImageClick(event) {
         switch (true) {
             case selectedImage.classList.contains("cPc") || selectedImage.classList.contains("imgSetup"):
                 selectedIcon = document.getElementById("iconPc").querySelector("i");
+                page = pcPage;
                 break;
             case selectedImage.classList.contains("cCats") || selectedImage.classList.contains("imgCats"):
                 selectedIcon = document.getElementById("iconCats").querySelector("i");
+                page = catPage;
                 break;
             case selectedImage.classList.contains("cProjects") || selectedImage.classList.contains("imgProjects"):
                 selectedIcon = document.getElementById("iconProjects").querySelector("i");
+                page = projectsPage;
                 break;
             case selectedImage.classList.contains("cWebsite") || selectedImage.classList.contains("imgWebsite"):
                 selectedIcon = document.getElementById("iconWebsite").querySelector("i");
+                page = websitePage;
                 break;
             case selectedImage.classList.contains("cLinks") || selectedImage.classList.contains("imgLinks"):
                 selectedIcon = document.getElementById("iconLinks").querySelector("i");
+                page = linksPage;
                 break;
             case selectedImage.classList.contains("cMusic") || selectedImage.classList.contains("imgMusic"):
                 selectedIcon = document.getElementById("iconMusic").querySelector("i");
+                page = musicPage;
                 break;
             case selectedImage.classList.contains("cGames") || selectedImage.classList.contains("imgGames"):
                 selectedIcon = document.getElementById("iconGames").querySelector("i");
+                page = gamesPage;
                 break;
-        }            
+        }
+        if (selectedImage.classList.contains("image")){
+            pcPage.classList.add('invisible');
+            catPage.classList.add('invisible');
+            projectsPage.classList.add('invisible');
+            websitePage.classList.add('invisible');
+            linksPage.classList.add('invisible');
+            musicPage.classList.add('invisible');
+            gamesPage.classList.add('invisible');
+            setTimeout(function() {
+                page.classList.remove('invisible');
+                mainPage.classList.add('invisible');
+            }, 1000);
+        }
         activeIcon = selectedIcon;
         if ((hideIcon && !isMoving) || selectedImage.classList.contains("image")) {
             activeIcon.classList.add("active");
@@ -287,6 +298,9 @@ function nav(endValue, id, clickedElement, page) {
                 const image = document.getElementById(id);
                 const rect = image.getBoundingClientRect();
                 imageCopy = image.cloneNode(true);
+                imageCopy.style.boxShadow = "none";
+                imageCopy.classList.remove("imageAnim");
+                imageCopy.classList.add("visible");
                 savedImage = imageCopy;
                 document.body.appendChild(imageCopy);
                 imageCopy.classList.add('fullscreen');
@@ -298,7 +312,6 @@ function nav(endValue, id, clickedElement, page) {
                 setTimeout(function() {
                     page.classList.remove('invisible');
                     mainPage.classList.add('invisible');
-
                 }, 1000);
             }
         });
@@ -345,10 +358,24 @@ function menu(clickedElement) {
     }, 1200);
 }
 
+const observer2 = new IntersectionObserver((entries) => {
+    entries.forEach((entry => {
+        if(entry.isIntersecting && entry.target.classList.contains('imageAppear')) {
+            entry.target.classList.add('imageAnim');
+        } else {
+            entry.target.classList.remove('imageAppear');
+            entry.target.classList.add('visible');
+        }
+    }));
+});
+
+const imageElements = document.querySelectorAll('.image');
+imageElements.forEach((el) => observer2.observe(el));
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry => {
         if(entry.isIntersecting) {
+            console.log(entry.target);
             entry.target.classList.add('show');
         }
     }));

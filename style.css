@@ -46,11 +46,12 @@ body {
   filter: blur(0);
 }
 
-.image:nth-child(2) { transition-delay: 400ms; }
-.image:nth-child(3) { transition-delay: 600ms; }
-.image:nth-child(4) { transition-delay: 800ms; }
-.image:nth-child(5) { transition-delay: 1000ms; }
-.image:nth-child(6) { transition-delay: 1200ms; }
+.image:nth-child(2) { animation-delay: 400ms; }
+.image:nth-child(3) { animation-delay: 600ms; }
+.image:nth-child(4) { animation-delay: 800ms; }
+.image:nth-child(5) { animation-delay: 1000ms; }
+.image:nth-child(6) { animation-delay: 1200ms; }
+.image:nth-child(7) { animation-delay: 1400ms; }
 
 .container:nth-child(1) { transition-delay: 200ms; }
 .container:nth-child(2) { transition-delay: 400ms; }
@@ -78,8 +79,9 @@ body {
   object-position: 50% center;
   cursor: pointer;
   border-radius: 16px;
+  border: 5px white solid;
   box-shadow: 0 0 4rem #222222;
-  /* opacity: 0.1; */
+  opacity: 0;
 }
 
 .fullscreen {
@@ -100,6 +102,7 @@ body {
     top: 50%;
     width: 34vmin;
     height: 50vmin;
+    border: 5px solid white;
   }
   to {
     left: 0%;
@@ -107,6 +110,7 @@ body {
     width: 100vw;
     height: 100vh;
     border-radius: 0px;
+    border: 0 solid gray;
   }
 }
 
@@ -118,6 +122,7 @@ body {
     top: 50%;
     width: 100vw;
     height: 100vh;
+    border: 0 solid gray;
   }
   to {
     left: var(--start-x);
@@ -125,6 +130,7 @@ body {
     width: 34vmin;
     height: 50vmin;
     border-radius: 16px;
+    border: 5px solid white;
   }
 }
 
@@ -151,9 +157,9 @@ body {
 
 .icon2 {
   position: absolute;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
   width: 45px;
   aspect-ratio: 1;
   border: 3.5px white solid;
@@ -183,6 +189,7 @@ body {
   color: white;
   font-size: 14px;
   font-family: Lucida Console, Monospace;
+  /* margin-top: 1%; */
   /* border: red 2px solid; */
 }
 
@@ -217,7 +224,7 @@ h2 {
 }
 
 .button {
-  z-index: 4;
+  z-index: 998;
   position: fixed;
   top: -100px;
   left: 50%;
@@ -620,3 +627,22 @@ h2 {
   user-select: none;
   /* border: red 2px solid; */
 }
+
+.imageAnim {
+  animation: imageAnim 1s forwards;
+}
+
+@keyframes imageAnim {
+  from{
+    opacity: 0;
+    transform: translateY(15%);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.visible { opacity: 1; }
