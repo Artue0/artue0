@@ -297,15 +297,18 @@ h2 {
   font-family: Lucida Console, Monospace;
 }
 
-.icon:hover i, .active {
+.icon:hover i,
+.icon i.active {
   color: white;
   transform: translateY(-10px);
 }
 
-.icon:hover .text, .active + .text {
+.icon:hover .text,
+.icon i.active + .text {
   opacity: 1;
   transform: translateY(15px);
 }
+
 
 ::-webkit-scrollbar {
   width: 15px;
@@ -530,7 +533,7 @@ h2 {
 .about-me-text p {
   font-size: 3rem;
   font-family: Lucida Console, Monospace;
-  text-align: justify;
+  text-align: start;
 }
 
 .game-dev {grid-column: 2 / span 5;}
@@ -594,10 +597,12 @@ h2 {
 
 @media screen and (max-width: 1285px) {h1 {font-size: 5rem;}}
 @media screen and (max-width: 1080px) {h1 {margin-top: 6vh;}}
-@media screen and (max-width: 525px) {h1 {
-  font-size: 4rem;
-  margin-top: 8vh;
-}}
+@media screen and (max-width: 525px) {
+  h1 {
+    font-size: 4rem;
+    margin-top: 8vh;
+  }
+}
 
 
 .invisible {opacity: 0;}

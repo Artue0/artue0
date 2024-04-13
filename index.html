@@ -9,31 +9,31 @@
 </head>
 <body>
     <div id="navbar">
-        <div id="iconPc" class="icon" onclick="home(this)">
+        <div id="iconPc" class="icon" onclick="home(this.querySelector('i'))">
             <i class="fa-solid fa-computer fa-2xl setup"></i>
             <div class="text">SETUP</div>
         </div>
-        <div id="iconCats" class="icon" onclick="about(this)">
+        <div id="iconCats" class="icon" onclick="about(this.querySelector('i'))">
             <i class="fa-solid fa-cat fa-2xl cats"></i>
             <div class="text">CATS</div>
         </div>
-        <div id="iconProjects" class="icon" onclick="projects(this)">
+        <div id="iconProjects" class="icon" onclick="projects(this.querySelector('i'))">
             <i class="fa-solid fa-code fa-2xl projects"></i>
             <div class="text">PROJECTS</div>
         </div>
-        <div id="iconWensite" class="icon" onclick="portfolio(this)">
+        <div id="iconWebsite" class="icon" onclick="portfolio(this.querySelector('i'))">
             <i class="fa-solid fa-user fa-2xl portfolio"></i>
             <div class="text">WEBSITE</div>
         </div>
-        <div id="iconLinks" class="icon" onclick="contact(this)">
+        <div id="iconLinks" class="icon" onclick="contact(this.querySelector('i'))">
             <i class="fa-solid fa-phone fa-2xl links"></i>
             <div class="text">LINKS</div>
         </div>
-        <div id="iconMusic" class="icon" onclick="music(this)">
+        <div id="iconMusic" class="icon" onclick="music(this.querySelector('i'))">
             <i class="fa-solid fa-music fa-2xl music"></i>
             <div class="text">MUSIC</div>
         </div>
-        <div id="iconGames" class="icon" onclick="games(this)">
+        <div id="iconGames" class="icon" onclick="games(this.querySelector('i'))">
             <i class="fa-solid fa-game-console-handheld fa-2xl games"></i>
             <div class="text">GAMES</div>
         </div>          
@@ -42,63 +42,63 @@
     <div id="main-page">
         <h2 class="see hidden hidden-up">WHAT WOUDL YOU LIKE TO SEE?</h2>
         <div id="bar">
-            <div class="container cPc hidden hidden-blur">
-                <div class="icon2" onclick="home(null)">
-                    <i class="fa-solid fa-computer fa-2xl"></i>
+            <div class="container hidden hidden-blur">
+                <div class="icon2" onclick="home(document.getElementById('iconPc'))">
+                    <i class="fa-solid fa-computer fa-2xl cPc"></i>
                 </div>
                 <div class="text-container">
                     <p>MY</p>
                     <p>SETUP</p>
                 </div>
             </div>
-            <div class="container cCats hidden hidden-blur">
+            <div class="container hidden hidden-blur">
                 <div class="icon2" onclick="about(null)">
-                    <i class="fa-solid fa-cat fa-2xl"></i>
+                    <i class="fa-solid fa-cat fa-2xl cCats"></i>
                 </div>
                 <div class="text-container">
                     <p>COOL</p>
                     <p>CATS</p>
                 </div>
             </div>
-            <div class="container cProjects hidden hidden-blur">
+            <div class="container hidden hidden-blur">
                 <div class="icon2" onclick="projects(null)">
-                    <i class="fa-solid fa-code fa-2xl"></i>
+                    <i class="fa-solid fa-code fa-2xl cProjects"></i>
                 </div>
                 <div class="text-container">
                     <p>PROJECTS</p>
                     <p>I MADE</p>
                 </div>
             </div>
-            <div class="container cWebsite hidden hidden-blur">
+            <div class="container hidden hidden-blur">
                 <div class="icon2" onclick="portfolio(null)">
-                    <i class="fa-solid fa-user fa-2xl"></i>
+                    <i class="fa-solid fa-user fa-2xl cWebsite"></i>
                 </div>
                 <div class="text-container">
                     <p>ABOUT THIS</p>
                     <p>WEBSITE</p>
                 </div>
             </div>
-            <div class="container cLinks hidden hidden-blur">
+            <div class="container hidden hidden-blur">
                 <div class="icon2" onclick="contact(null)">
-                    <i class="fa-solid fa-phone fa-2xl"></i>
+                    <i class="fa-solid fa-phone fa-2xl cLinks"></i>
                 </div>
                 <div class="text-container">
                     <p>SOME</p>
                     <p>LINKS</p>
                 </div>
             </div>
-            <div class="container cMusic hidden hidden-blur">
+            <div class="container hidden hidden-blur">
                 <div class="icon2" onclick="music(null)">
-                    <i class="fa-solid fa-music fa-2xl"></i>
+                    <i class="fa-solid fa-music fa-2xl cMusic"></i>
                 </div>
                 <div class="text-container">
                     <p>MUSIC I</p>
                     <p>LISTEN TO</p>
                 </div>
             </div>
-            <div class="container cGames hidden hidden-blur">
+            <div class="container hidden hidden-blur">
                 <div class="icon2" onclick="games(null)">
-                    <i class="fa-solid fa-game-console-handheld fa-2xl"></i>
+                    <i class="fa-solid fa-game-console-handheld fa-2xl cGames"></i>
                 </div> 
                 <div class="text-container">
                     <p>GAMES</p>
@@ -170,13 +170,13 @@
 
     <i class="fa-solid fa-circle-xmark fa-2xl button"></i>
     <div id="image-track" data-mouse-down-at="0" data-prev-percentage="-50">
-        <img class="image" id="home" src="assets/music.jpg" draggable="false">
-        <img class="image hidden hidden-up" id="about" src="assets/music3.jpg" draggable="false">
-        <img class="image hidden hidden-up" id="projects" src="assets/1.jpg" draggable="false">
-        <img class="image hidden hidden-up" id="portfolio" src="assets/5.png" draggable="false">
-        <img class="image hidden hidden-up" id="contact" src="assets/2v2.png" draggable="false">
-        <img class="image hidden hidden-up" id="music" src="assets/projects.png" draggable="false">
-        <img class="image" id="games" src="assets/music.jpg" draggable="false">
+        <img class="image imgSetup" id="home" src="assets/music.jpg" draggable="false">
+        <img class="image hidden hidden-up imgCats" id="about" src="assets/music3.jpg" draggable="false">
+        <img class="image hidden hidden-up imgProjects" id="projects" src="assets/1.jpg" draggable="false">
+        <img class="image hidden hidden-up imgWebsite" id="portfolio" src="assets/5.png" draggable="false">
+        <img class="image hidden hidden-up imgLinks" id="contact" src="assets/2v2.png" draggable="false">
+        <img class="image hidden hidden-up imgMusic" id="music" src="assets/projects.png" draggable="false">
+        <img class="image imgGames" id="games" src="assets/music.jpg" draggable="false">
     </div>
     <script src="script.js"></script>
 </body>

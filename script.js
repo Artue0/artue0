@@ -13,9 +13,8 @@ var projectsPage = document.getElementById("projects-page");
 var websitePage = document.getElementById("website-page");
 var linksPage = document.getElementById("links-page");
 var enableCode = true;
-var downMenu = false;
 var forceMenu = false;
-const icons = document.querySelectorAll(".icon, .container");
+const icons = document.querySelectorAll(".icon");
 let selectedIcon = null;
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -70,57 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
-        // console.log("selectedIcon: ", selectedIcon);
+        console.log("navTop: ", navTop);
+        console.log("activeIcon: ", activeIcon);
     });
 
     window.addEventListener('touchmove', function (event) {
         handleOnMove(event.touches[0]);
     });
 
-    function handleImageClick(event) {
-        const selectedImage = event.target;
-        const rect = selectedImage.getBoundingClientRect();
-        const button = document.getElementsByClassName('button')[0];
-        if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
-            imageCopy = selectedImage.cloneNode(true);
-            savedImage = imageCopy;
-            enableCode = !enableCode;
-            document.body.appendChild(imageCopy);
-            imageCopy.classList.add('fullscreen');
-            imageCopy.style.setProperty('--start-x', rect.left + 'px');
-            button.classList.remove('slideUp');
-            button.classList.add('slideDown');
-            navTop = false;
-        }
-        if (selectedImage.classList.contains('button')){
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            if (window.scrollY === 0) {
-                imageCopy.classList.add('reverseFullscreen');
-                button.classList.remove('slideDown');
-                button.classList.add('slideUp');
-                setTimeout(function() {
-                    imageCopy.parentNode.removeChild(imageCopy);
-                    if (!navTop) {enableCode = !enableCode;}
-                }, 1200);
-                mainPage.classList.remove('invisible');
-                pcPage.classList.add('invisible');
-                catPage.classList.add('invisible');
-                projectsPage.classList.add('invisible');
-                websitePage.classList.add('invisible');
-                linksPage.classList.add('invisible');
-                musicPage.classList.add('invisible');
-                gamesPage.classList.add('invisible');
-
-                const activeElements = document.querySelectorAll('.active');
-                activeElements.forEach(element => {
-                    element.classList.remove('active');
-                });
-            }
-        }
-    }
+    
 
     // const myRange = document.getElementById("myRange");
 
@@ -138,84 +95,132 @@ document.addEventListener('DOMContentLoaded', function () {
     // });
 });
 
+function handleImageClick(event) {
+    const selectedImage = event.target;
+    const rect = selectedImage.getBoundingClientRect();
+    const button = document.getElementsByClassName('button')[0];
+    if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
+        imageCopy = selectedImage.cloneNode(true);
+        savedImage = imageCopy;
+        enableCode = !enableCode;
+        document.body.appendChild(imageCopy);
+        imageCopy.classList.add('fullscreen');
+        imageCopy.style.setProperty('--start-x', rect.left + 'px');
+        button.classList.remove('slideUp');
+        button.classList.add('slideDown');
+        navTop = true;
+        imageCopy.style.boxShadow = "none";
+        // hideIcon = true;
+        // isMoving = false;
+    }
+    if (selectedImage.classList.contains('button')){
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        if (window.scrollY === 0) {
+            activeIcon = 0;
+            imageCopy.classList.add('reverseFullscreen');
+            button.classList.remove('slideDown');
+            button.classList.add('slideUp');
+            setTimeout(function() {
+                imageCopy.parentNode.removeChild(imageCopy);
+                enableCode = !enableCode;
+            }, 1200);
+            mainPage.classList.remove('invisible');
+            pcPage.classList.add('invisible');
+            catPage.classList.add('invisible');
+            projectsPage.classList.add('invisible');
+            websitePage.classList.add('invisible');
+            linksPage.classList.add('invisible');
+            musicPage.classList.add('invisible');
+            gamesPage.classList.add('invisible');
+
+            const activeElements = document.querySelectorAll('.active');
+            activeElements.forEach(element => {
+                element.classList.remove('active');
+            });
+        }
+    }
+    if (selectedImage.parentNode.classList.contains("icon2") || selectedImage.classList.contains("image")) {
+        switch (true) {
+            case selectedImage.classList.contains("cPc") || selectedImage.classList.contains("imgSetup"):
+                selectedIcon = document.getElementById("iconPc").querySelector("i");
+                break;
+            case selectedImage.classList.contains("cCats") || selectedImage.classList.contains("imgCats"):
+                selectedIcon = document.getElementById("iconCats").querySelector("i");
+                break;
+            case selectedImage.classList.contains("cProjects") || selectedImage.classList.contains("imgProjects"):
+                selectedIcon = document.getElementById("iconProjects").querySelector("i");
+                break;
+            case selectedImage.classList.contains("cWebsite") || selectedImage.classList.contains("imgWebsite"):
+                selectedIcon = document.getElementById("iconWebsite").querySelector("i");
+                break;
+            case selectedImage.classList.contains("cLinks") || selectedImage.classList.contains("imgLinks"):
+                selectedIcon = document.getElementById("iconLinks").querySelector("i");
+                break;
+            case selectedImage.classList.contains("cMusic") || selectedImage.classList.contains("imgMusic"):
+                selectedIcon = document.getElementById("iconMusic").querySelector("i");
+                break;
+            case selectedImage.classList.contains("cGames") || selectedImage.classList.contains("imgGames"):
+                selectedIcon = document.getElementById("iconGames").querySelector("i");
+                break;
+        }            
+        activeIcon = selectedIcon;
+        if ((hideIcon && !isMoving) || selectedImage.classList.contains("image")) {
+            activeIcon.classList.add("active");
+        }
+    }
+}
+
 icons.forEach(icon => {
     icon.addEventListener("click", function() {
-        if (icon.classList.contains("container")) {
-            console.log("icon constains container");
-            switch (true) {
-                case icon.classList.contains("cPc"):
-                    selectedIcon = document.getElementById("iconPc");
-                    break;
-                case icon.classList.contains("cCats"):
-                    selectedIcon = document.getElementById("iconCats");
-                    break;
-                case icon.classList.contains("cProjects"):
-                    selectedIcon = document.getElementById("iconProjects");
-                    break;
-                case icon.classList.contains("cWebsite"):
-                    selectedIcon = document.getElementById("iconWensite"); // corrected typo here
-                    break;
-                case icon.classList.contains("cLinks"):
-                    selectedIcon = document.getElementById("iconLinks");
-                    break;
-                case icon.classList.contains("cMusic"):
-                    selectedIcon = document.getElementById("iconMusic");
-                    break;
-                case icon.classList.contains("cGames"):
-                    selectedIcon = document.getElementById("iconGames");
-                    break;
-            }            
-            if (hideIcon && !isMoving) {selectedIcon.classList.add("active");}
-            activeIcon = selectedIcon;
-        } else{
-            if (hideIcon && !isMoving) {this.classList.add("active");}
-            activeIcon = this;
+        if (hideIcon && !isMoving) {
+            this.classList.add("active");
         }
+        activeIcon = this.querySelector("i");
     });
 });
 
 function home(clickedElement){
     clickedIcon = document.getElementsByClassName('setup')[0];
-    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
     if (clickedElement != activeIcon) {nav(-6.5, "home", clickedIcon, pcPage);}
-    if (clickedElement === null) {activeIcon = clickedElement;}
 }
 function about(clickedElement){
     clickedIcon = document.getElementsByClassName('cats')[0];
-    if (clickedElement === activeIcon && navTop || forceMenu) { menu(clickedIcon); }
-    if (clickedElement != activeIcon && !forceMenu) {nav(-21, "about", clickedIcon, catPage);}
-    if (clickedElement === null) {activeIcon = clickedElement;}
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    if (clickedElement != activeIcon) {nav(-21, "about", clickedIcon, catPage);}
 }
 function projects(clickedElement){
     clickedIcon = document.getElementsByClassName('projects')[0];
-    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
     if (clickedElement != activeIcon) {nav(-35.5, "projects", clickedIcon, projectsPage);}
 }
 function portfolio(clickedElement){
     clickedIcon = document.getElementsByClassName('portfolio')[0];
-    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
     if (clickedElement != activeIcon) {nav(-50, "portfolio", clickedIcon, websitePage);}
 }
 function contact(clickedElement){
     clickedIcon = document.getElementsByClassName('links')[0];
-    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
     if (clickedElement != activeIcon) {nav(-64.5, "contact", clickedIcon, linksPage);}
 }
 function music(clickedElement){
     clickedIcon = document.getElementsByClassName('music')[0];
-    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
     if (clickedElement != activeIcon) {nav(-79, "music", clickedIcon, musicPage);}
 }
 function games(clickedElement){
     clickedIcon = document.getElementsByClassName('games')[0];
-    if (clickedElement === activeIcon && navTop || downMenu) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
     if (clickedElement != activeIcon) {nav(-93.5, "games", clickedIcon, gamesPage);}
 }
 
 function nav(endValue, id, clickedElement, page) {
     console.log("nav");
     if(isMoving){return;}
-    if(downMenu){forceMenu = true;}
 
     hideIcon = true;
     isMoving = true;
@@ -249,9 +254,10 @@ function nav(endValue, id, clickedElement, page) {
         button.classList.remove('slideDown');
         button.classList.add('slideUp');
         clickedElement.classList.add("active");
+        // clickedElement.querySelector(".text").classList.add("textActive");
         navTop = false;
         setTimeout(function() {
-            savedImage.parentNode.removeChild(savedImage);
+            savedImage.remove();
             savedImage = 0;
         }, 1200);
         mainPage.classList.add('invisible');
@@ -335,6 +341,7 @@ function menu(clickedElement) {
             savedImage = 0;
         }
         forceMenu = false;
+        activeIcon = 0;
     }, 1200);
 }
 
