@@ -17,9 +17,21 @@ var enableCode = true;
 var forceMenu = false;
 const icons = document.querySelectorAll(".icon");
 let selectedIcon = null;
+let index = 0;
+let pos = null;
+const indicator = document.querySelectorAll('#indicator p');
+const pages = document.querySelectorAll("#pc-page, #cat-page, #projects-page, #website-page, #links-page, #music-page, #games-page");
+let nextPercentage2 = null;
+
+pages.forEach(page2 => {
+    page2.childNodes.forEach(child => {
+        if (child.nodeType === 1) {child.classList.add("invisible");}
+    });
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
+
     track.dataset.percentage = -50;
 
     var handleOnDown = function (event) {
@@ -39,11 +51,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const percentage = (mouseDelta / maxDelta) * -100;
         const nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage;
-        const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
+        const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, -6.5), -93.5);
 
         track.dataset.percentage = nextPercentage;
 
         track.style.transform = `translate(${nextPercentage}%, -50%)`;
+
+        let nextPercentage2Unconstrained = Math.max(Math.min(((nextPercentageUnconstrained + 50) * 6.9), 300), -300);
+        nextPercentage2 = nextPercentage2Unconstrained;
+        indicator.forEach((pElement) => {
+            pElement.style.transform = `translate(${nextPercentage2}%, 0)`;
+        });
+        console.log("1: ", nextPercentage);
+        console.log("2: ", nextPercentage2);
 
         const images = track.getElementsByClassName("image");
         for (var image of images) {
@@ -71,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
         // console.log("navTop: ", navTop);
-        // console.log("activeIcon: ", activeIcon);
+        // console.log("nextPercentage: ", (nextPercentage + 50)*6);
     });
 
     window.addEventListener('touchmove', function (event) {
@@ -119,13 +139,18 @@ function handleImageClick(event) {
             }, 1200);
 
             mainPage.classList.remove('invisible');
-            pcPage.classList.add('invisible');
-            catPage.classList.add('invisible');
-            projectsPage.classList.add('invisible');
-            websitePage.classList.add('invisible');
-            linksPage.classList.add('invisible');
-            musicPage.classList.add('invisible');
-            gamesPage.classList.add('invisible');
+            // pcPage.classList.add('invisible');
+            // catPage.classList.add('invisible');
+            // projectsPage.classList.add('invisible');
+            // websitePage.classList.add('invisible');
+            // linksPage.classList.add('invisible');
+            // musicPage.classList.add('invisible');
+            // gamesPage.classList.add('invisible');
+            pages.forEach(page2 => {
+                page2.childNodes.forEach(child => {
+                    if (child.nodeType === 1) {child.classList.add("invisible");}
+                });
+            });
 
             const activeElements = document.querySelectorAll('.active');
             activeElements.forEach(element => {
@@ -165,15 +190,15 @@ function handleImageClick(event) {
                 break;
         }
         if (selectedImage.classList.contains("image")){
-            pcPage.classList.add('invisible');
-            catPage.classList.add('invisible');
-            projectsPage.classList.add('invisible');
-            websitePage.classList.add('invisible');
-            linksPage.classList.add('invisible');
-            musicPage.classList.add('invisible');
-            gamesPage.classList.add('invisible');
+            pages.forEach(page2 => {
+                page2.childNodes.forEach(child => {
+                    if (child.nodeType === 1) {child.classList.add("invisible");}
+                });
+            });
             setTimeout(function() {
-                page.classList.remove('invisible');
+                page.childNodes.forEach(child => {
+                    if (child.nodeType === 1) {child.classList.remove("invisible");}
+                });
                 mainPage.classList.add('invisible');
             }, 1000);
         }
@@ -272,21 +297,28 @@ function nav(endValue, id, clickedElement, page) {
             savedImage = 0;
         }, 1200);
         mainPage.classList.add('invisible');
-        pcPage.classList.add('invisible');
-        catPage.classList.add('invisible');
-        projectsPage.classList.add('invisible');
-        websitePage.classList.add('invisible');
-        linksPage.classList.add('invisible');
-        musicPage.classList.add('invisible');
-        gamesPage.classList.add('invisible');
+        // pcPage.classList.add('invisible');
+        // catPage.classList.add('invisible');
+        // projectsPage.classList.add('invisible');
+        // websitePage.classList.add('invisible');
+        // linksPage.classList.add('invisible');
+        // musicPage.classList.add('invisible');
+        // gamesPage.classList.add('invisible');
+        pages.forEach(page2 => {
+            page2.childNodes.forEach(child => {
+                if (child.nodeType === 1) {child.classList.add("invisible");}
+            });
+        });
     }
 
     function startUpdatePercentage() {
         const updatePercentage = setInterval(() => {
             nextPercentage += increment;
             track.dataset.percentage = nextPercentage;
-
             track.style.transform = `translate(${nextPercentage}%, -50%)`;
+            indicator.forEach((pElement) => {
+                pElement.style.transform = `translate(${nextPercentage2}%, 0)`;
+            });
 
             const images = track.getElementsByClassName("image");
             for (var image of images) {
@@ -310,8 +342,14 @@ function nav(endValue, id, clickedElement, page) {
                 navTop = true;
                 isMoving = false;
                 setTimeout(function() {
-                    page.classList.remove('invisible');
+                    page.childNodes.forEach(child => {
+                        if (child.nodeType === 1) {child.classList.remove("invisible");}
+                    });
                     mainPage.classList.add('invisible');
+                    setTimeout(() => {
+                        observe();
+                    }, 1000);
+                    
                 }, 1000);
             }
         });
@@ -323,13 +361,18 @@ function nav(endValue, id, clickedElement, page) {
 function menu(clickedElement) {
     console.log("menu");
     mainPage.classList.remove('invisible');
-    pcPage.classList.add('invisible');
-    catPage.classList.add('invisible');
-    projectsPage.classList.add('invisible');
-    websitePage.classList.add('invisible');
-    linksPage.classList.add('invisible');
-    musicPage.classList.add('invisible');
-    gamesPage.classList.add('invisible');
+    // pcPage.classList.add('invisible');
+    // catPage.classList.add('invisible');
+    // projectsPage.classList.add('invisible');
+    // websitePage.classList.add('invisible');
+    // linksPage.classList.add('invisible');
+    // musicPage.classList.add('invisible');
+    // gamesPage.classList.add('invisible');
+    pages.forEach(page2 => {
+        page2.childNodes.forEach(child => {
+            if (child.nodeType === 1) {child.classList.add("invisible");}
+        });
+    });
     hideIcon = false;
     const button = document.getElementsByClassName('button')[0];
     navTop = false;
@@ -374,15 +417,19 @@ imageElements.forEach((el) => observer2.observe(el));
 
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry => {
-        if(entry.isIntersecting) {
-            console.log(entry.target);
+        if(entry.isIntersecting && !entry.target.classList.contains("invisible")) {
+            console.log("succed");
             entry.target.classList.add('show');
+            console.log("entry: ", entry.target);
         }
     }));
 });
 
 const hiddenElements = document.querySelectorAll('.hidden');
-hiddenElements.forEach((el) => observer.observe(el));
+function observe(){
+    hiddenElements.forEach((el) => observer.observe(el));
+}
+observe();
 
 window.addEventListener('load', function() {
     window.scrollTo(0, 0);

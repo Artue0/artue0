@@ -41,7 +41,7 @@ body {
 }
 
 .show {
-  transform: translateX(0);
+  transform: translate(0,0);
   opacity: 1;
   filter: blur(0);
 }
@@ -336,7 +336,7 @@ h2 {
   height: 82px;
   position: absolute;
   left: 40%;
-  top: 88vh;
+  top: 93vh;
   transform: translateX(-125%);
   animation: arrow 6s infinite;
   /* border: 2px green solid; */
@@ -390,7 +390,7 @@ h2 {
   height: 50px;
   position: absolute;
   left: 40%;
-  top: 82vh;
+  top: 87vh;
   transform: translateX(-50%);
   display: grid;
   grid-template-columns: auto auto auto auto auto;
@@ -419,7 +419,7 @@ h2 {
 .animation2 {
   position: absolute;
   left: 60%;
-  top: 87vh;
+  top: 92vh;
 }
 
 .animation2 i{
@@ -441,7 +441,7 @@ h2 {
   z-index: -1;
   position: absolute;
   left: 60%;
-  top: 87vh;
+  top: 92vh;
   background-color: white;
   width: 40px;
   height: 60px;
@@ -622,7 +622,7 @@ h2 {
   width: 100vw;
   font-size: 6rem;
   position: absolute;
-  top: 10vh;
+  top: 15vh;
   font-family: FoundryGridnikRegular;
   user-select: none;
   /* border: red 2px solid; */
@@ -646,3 +646,28 @@ h2 {
 }
 
 .visible { opacity: 1; }
+
+#indicator {
+  position: absolute;
+  left: 50%;
+  top: 79vh;
+  transform: translateX(-50%);
+  /* border: white 3px solid; */
+  width: 31vmin;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-shadow: 0 0 7rem #222222;
+  transition-delay: 1000ms;
+}
+
+#indicator p {
+  color: white;
+  font-family: Lucida Console, Monospace;
+  font-size: 2.5rem;
+  min-width: 40vmin;
+  user-select: none;
+  /* border: red 3px solid; */
+}
