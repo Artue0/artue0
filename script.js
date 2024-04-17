@@ -430,7 +430,3 @@ function observe(){
     hiddenElements.forEach((el) => observer.observe(el));
 }
 observe();
-
-window.addEventListener('load', function() {
-    window.scrollTo(0, 0);
-});

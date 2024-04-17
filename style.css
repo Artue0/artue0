@@ -620,9 +620,10 @@ h2 {
   justify-content: center;
   color: white;
   width: 100vw;
-  font-size: 6rem;
+  font-size: 10rem;
   position: absolute;
-  top: 15vh;
+  top: 50vh;
+  transform: translateY(-50%);
   font-family: FoundryGridnikRegular;
   user-select: none;
   /* border: red 2px solid; */
@@ -670,4 +671,33 @@ h2 {
   min-width: 40vmin;
   user-select: none;
   /* border: red 3px solid; */
+}
+
+.basicText {
+  font-size: 4rem;
+  color: white;
+  font-family: Lucida Console, Monospace;
+  text-align: left;
+}
+
+.websiteText {
+  position: absolute;
+  left: 50%;
+  top: 150vh;
+  transform: translate(-50%,-50%);
+  width: 40vw;
+}
+
+.websiteText p {
+  text-align: left;
+}
+
+.websiteText a { color: white; }
+
+.websiteText2 {
+  position: absolute;
+  left: 50%;
+  top: 200vh;
+  transform: translate(-50%,-50%);
+  width: 40vw;
 }
