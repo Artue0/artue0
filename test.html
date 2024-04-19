@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Scrollbar</title>
+<style>
+  .scroll-container {
+    width: 300px; /* Adjust as needed */
+    height: 200px; /* Adjust as needed */
+    overflow: hidden;
+    position: relative;
+  }
+
+  .scroll-content {
+    width: calc(100% + 17px); /* Width + scrollbar width */
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 17px; /* Adjust according to scrollbar width */
+  }
+
+  /* Custom scrollbar */
+  .scrollbar {
+    width: 17px; /* Adjust as needed */
+    background-color: #f1f1f1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  .scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    cursor: pointer;
+    position: absolute;
+  }
+</style>
+</head>
+<body>
+<div class="scroll-container">
+  <div class="scroll-content">
+    <!-- Your content here -->
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vitae eros quis magna molestie tincidunt. In hac habitasse platea dictumst. Sed gravida urna eu sapien tincidunt rhoncus. Integer non massa nec elit feugiat rutrum. Morbi quis sapien non ligula consequat vulputate. Vestibulum feugiat tellus vel lacus dignissim, vitae tincidunt ex vestibulum. Aenean nec venenatis urna, quis commodo elit. Suspendisse nec ex non lorem malesuada pretium non at lorem.</p>
+    <p>Phasellus convallis lorem id elit laoreet commodo. Cras nec tincidunt nisl. Ut pretium congue sapien. Nam ac lorem eu ipsum semper elementum a ac sapien. Nam iaculis nibh nec magna euismod, id malesuada enim convallis. Maecenas consectetur, risus eget dictum mattis, nisl libero convallis ante, non feugiat risus tellus id risus. Integer vehicula volutpat justo, eu fringilla leo malesuada vel. Nulla facilisi. Vestibulum volutpat semper mauris, nec condimentum dui vehicula at. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let scrollbarThumb = document.createElement("div");
+    scrollbarThumb.className = "scrollbar-thumb";
+    let scrollbar = document.createElement("div");
+    scrollbar.className = "scrollbar";
+    scrollbar.appendChild(scrollbarThumb);
+    document.querySelector(".scroll-container").appendChild(scrollbar);
+
+    const scrollContainer = document.querySelector(".scroll-container");
+    const scrollContent = document.querySelector(".scroll-content");
+    const scrollbarHeight = scrollContainer.clientHeight / scrollContent.scrollHeight * scrollContainer.clientHeight;
+    scrollbarThumb.style.height = scrollbarHeight + "px";
+
+    scrollbarThumb.addEventListener("mousedown", function (event) {
+      event.preventDefault();
+      const startY = event.clientY;
+      const scrollTop = scrollContainer.scrollTop;
+      
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", onMouseUp);
+
+      function onMouseMove(event) {
+        const deltaY = event.clientY - startY;
+        const percentageScrolled = deltaY / scrollContainer.clientHeight;
+        scrollContent.scrollTop = scrollTop + percentageScrolled * scrollContent.scrollHeight;
+        updateThumbPosition();
+      }
+
+      function onMouseUp() {
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("mouseup", onMouseUp);
+      }
+    });
+
+    function updateThumbPosition() {
+      const scrollPercentage = scrollContent.scrollTop / (scrollContent.scrollHeight - scrollContainer.clientHeight);
+      const thumbPosition = scrollPercentage * (scrollContainer.clientHeight - scrollbarThumb.clientHeight);
+      scrollbarThumb.style.top = thumbPosition + "px";
+    }
+
+    scrollContent.addEventListener("scroll", updateThumbPosition);
+  });
+</script>
+</body>
+</html>

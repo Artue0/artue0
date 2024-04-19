@@ -22,12 +22,9 @@ let pos = null;
 const indicator = document.querySelectorAll('#indicator p');
 const pages = document.querySelectorAll("#pc-page, #cat-page, #projects-page, #website-page, #links-page, #music-page, #games-page");
 let nextPercentage2 = null;
-
-pages.forEach(page2 => {
-    page2.childNodes.forEach(child => {
-        if (child.nodeType === 1) {child.classList.add("invisible");}
-    });
-});
+let pageHeight = document.body.scrollHeight;
+const all = document.getElementById("all");
+let height = 1;
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
@@ -62,8 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
         indicator.forEach((pElement) => {
             pElement.style.transform = `translate(${nextPercentage2}%, 0)`;
         });
-        console.log("1: ", nextPercentage);
-        console.log("2: ", nextPercentage2);
 
         const images = track.getElementsByClassName("image");
         for (var image of images) {
@@ -90,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
-        // console.log("navTop: ", navTop);
-        // console.log("nextPercentage: ", (nextPercentage + 50)*6);
+        console.log("height: ", height);
+        console.log("all.style.height: ", all.style.height);
     });
 
     window.addEventListener('touchmove', function (event) {
@@ -139,13 +134,6 @@ function handleImageClick(event) {
             }, 1200);
 
             mainPage.classList.remove('invisible');
-            // pcPage.classList.add('invisible');
-            // catPage.classList.add('invisible');
-            // projectsPage.classList.add('invisible');
-            // websitePage.classList.add('invisible');
-            // linksPage.classList.add('invisible');
-            // musicPage.classList.add('invisible');
-            // gamesPage.classList.add('invisible');
             pages.forEach(page2 => {
                 page2.childNodes.forEach(child => {
                     if (child.nodeType === 1) {child.classList.add("invisible");}
@@ -241,7 +229,10 @@ function portfolio(clickedElement){
 function contact(clickedElement){
     clickedIcon = document.getElementsByClassName('links')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    if (clickedElement != activeIcon) {nav(-64.5, "contact", clickedIcon, linksPage);}
+    if (clickedElement != activeIcon) {
+        height = 0.44;
+        nav(-64.5, "contact", clickedIcon, linksPage);
+    }
 }
 function music(clickedElement){
     clickedIcon = document.getElementsByClassName('music')[0];
@@ -257,6 +248,9 @@ function games(clickedElement){
 function nav(endValue, id, clickedElement, page) {
     console.log("nav");
     if(isMoving){return;}
+
+    pages.forEach(page2 => { page2.style.height = `${pageHeight*height}px`; });
+    all.style.height = `${pageHeight*height}px`;
 
     hideIcon = true;
     isMoving = true;
@@ -290,20 +284,12 @@ function nav(endValue, id, clickedElement, page) {
         button.classList.remove('slideDown');
         button.classList.add('slideUp');
         clickedElement.classList.add("active");
-        // clickedElement.querySelector(".text").classList.add("textActive");
         navTop = false;
         setTimeout(function() {
             savedImage.remove();
             savedImage = 0;
         }, 1200);
         mainPage.classList.add('invisible');
-        // pcPage.classList.add('invisible');
-        // catPage.classList.add('invisible');
-        // projectsPage.classList.add('invisible');
-        // websitePage.classList.add('invisible');
-        // linksPage.classList.add('invisible');
-        // musicPage.classList.add('invisible');
-        // gamesPage.classList.add('invisible');
         pages.forEach(page2 => {
             page2.childNodes.forEach(child => {
                 if (child.nodeType === 1) {child.classList.add("invisible");}
@@ -361,18 +347,19 @@ function nav(endValue, id, clickedElement, page) {
 function menu(clickedElement) {
     console.log("menu");
     mainPage.classList.remove('invisible');
-    // pcPage.classList.add('invisible');
-    // catPage.classList.add('invisible');
-    // projectsPage.classList.add('invisible');
-    // websitePage.classList.add('invisible');
-    // linksPage.classList.add('invisible');
-    // musicPage.classList.add('invisible');
-    // gamesPage.classList.add('invisible');
+
+
+    // all.style.height = "auto";
+    // pageHeight = document.body.scrollHeight;
+    // all.style.height = `${pageHeight*height}px`;
     pages.forEach(page2 => {
         page2.childNodes.forEach(child => {
             if (child.nodeType === 1) {child.classList.add("invisible");}
         });
+        page2.style.height = `${pageHeight}px`;
     });
+    all.style.height = `${pageHeight}px`;
+
     hideIcon = false;
     const button = document.getElementsByClassName('button')[0];
     navTop = false;
@@ -418,9 +405,7 @@ imageElements.forEach((el) => observer2.observe(el));
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry => {
         if(entry.isIntersecting && !entry.target.classList.contains("invisible")) {
-            console.log("succed");
             entry.target.classList.add('show');
-            console.log("entry: ", entry.target);
         }
     }));
 });
@@ -430,3 +415,20 @@ function observe(){
     hiddenElements.forEach((el) => observer.observe(el));
 }
 observe();
+
+pages.forEach(page2 => {
+    page2.childNodes.forEach(child => {
+        if (child.nodeType === 1) {child.classList.add("invisible");}
+    });
+    page2.style.height = `${pageHeight}px`;
+});
+all.style.height = `${pageHeight}px`;
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth !== window.outerWidth || window.innerHeight !== window.outerHeight) {
+        all.style.height = "auto";
+        pageHeight = document.body.scrollHeight;
+        all.style.height = `${pageHeight*height}px`;
+        console.log("scrollHeight: ", pageHeight);
+    }
+});
