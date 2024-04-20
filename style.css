@@ -633,6 +633,7 @@ h2 {
   transform: translateY(-50%);
   font-family: FoundryGridnikRegular;
   user-select: none;
+  /* opacity: 0; */
   /* border: red 2px solid; */
 }
 

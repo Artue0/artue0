@@ -13,8 +13,8 @@ var projectsPage = document.getElementById("projects-page");
 var websitePage = document.getElementById("website-page");
 var linksPage = document.getElementById("links-page");
 let page;
+let currentPage;
 var enableCode = true;
-var forceMenu = false;
 const icons = document.querySelectorAll(".icon");
 let selectedIcon = null;
 let index = 0;
@@ -24,7 +24,6 @@ const pages = document.querySelectorAll("#pc-page, #cat-page, #projects-page, #w
 let nextPercentage2 = null;
 let pageHeight = document.body.scrollHeight;
 const all = document.getElementById("all");
-let height = 1;
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
@@ -85,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
-        console.log("height: ", height);
-        console.log("all.style.height: ", all.style.height);
+        console.log("navTop: ", navTop);
+        console.log("activeIcon: ", activeIcon);
     });
 
     window.addEventListener('touchmove', function (event) {
@@ -229,10 +228,7 @@ function portfolio(clickedElement){
 function contact(clickedElement){
     clickedIcon = document.getElementsByClassName('links')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
-    if (clickedElement != activeIcon) {
-        height = 0.44;
-        nav(-64.5, "contact", clickedIcon, linksPage);
-    }
+    if (clickedElement != activeIcon) { nav(-64.5, "contact", clickedIcon, linksPage); }
 }
 function music(clickedElement){
     clickedIcon = document.getElementsByClassName('music')[0];
@@ -248,9 +244,6 @@ function games(clickedElement){
 function nav(endValue, id, clickedElement, page) {
     console.log("nav");
     if(isMoving){return;}
-
-    pages.forEach(page2 => { page2.style.height = `${pageHeight*height}px`; });
-    all.style.height = `${pageHeight*height}px`;
 
     hideIcon = true;
     isMoving = true;
@@ -332,6 +325,11 @@ function nav(endValue, id, clickedElement, page) {
                         if (child.nodeType === 1) {child.classList.remove("invisible");}
                     });
                     mainPage.classList.add('invisible');
+
+                    page.style.height = "auto";
+                    pages.forEach(page2 => { page2.style.height = `${page.clientHeight}px`; });
+                    all.style.height = `${page.clientHeight}px`;
+
                     setTimeout(() => {
                         observe();
                     }, 1000);
@@ -348,10 +346,6 @@ function menu(clickedElement) {
     console.log("menu");
     mainPage.classList.remove('invisible');
 
-
-    // all.style.height = "auto";
-    // pageHeight = document.body.scrollHeight;
-    // all.style.height = `${pageHeight*height}px`;
     pages.forEach(page2 => {
         page2.childNodes.forEach(child => {
             if (child.nodeType === 1) {child.classList.add("invisible");}
@@ -369,22 +363,21 @@ function menu(clickedElement) {
             behavior: 'smooth'
         });
     }
-    if (savedImage) { // Check if savedImage is not null or undefined
+    if (savedImage) {
         savedImage.classList.add('reverseFullscreen');
     }
     button.classList.remove('slideDown');
     button.classList.add('slideUp');
-    if (clickedElement) { // Ensure clickedElement is defined
+    if (clickedElement) {
         clickedElement.classList.remove("active");
     }
-    enableCode = true;
     setTimeout(function () {
-        if (savedImage) { // Check if savedImage is not null or undefined
+        if (savedImage) {
             savedImage.parentNode.removeChild(savedImage);
             savedImage = 0;
         }
-        forceMenu = false;
         activeIcon = 0;
+        enableCode = true;
     }, 1200);
 }
 
@@ -426,9 +419,45 @@ all.style.height = `${pageHeight}px`;
 
 window.addEventListener('resize', function() {
     if (window.innerWidth !== window.outerWidth || window.innerHeight !== window.outerHeight) {
-        all.style.height = "auto";
-        pageHeight = document.body.scrollHeight;
-        all.style.height = `${pageHeight*height}px`;
+        if (activeIcon !== 0){
+            switch (true) {
+                case activeIcon.classList.contains("setup"):
+                    currentPage = pcPage;
+                    break;
+                case activeIcon.classList.contains("cats"):
+                    currentPage = catPage;
+                    break;
+                case activeIcon.classList.contains("projects"):
+                    currentPage = projectsPage;
+                    break;
+                case activeIcon.classList.contains("portfolio"):
+                    currentPage = websitePage;
+                    break;
+                case activeIcon.classList.contains("links"):
+                    currentPage = linksPage;
+                    break;
+                case activeIcon.classList.contains("music"):
+                    currentPage = musicPage;
+                    break;
+                case activeIcon.classList.contains("games"):
+                    currentPage = gamesPage;
+                    break;
+            }
+        }
+        if (navTop) {
+            currentPage.style.height = "auto";
+            pages.forEach(page2 => { page2.style.height = `${currentPage.clientHeight}px`; });
+            all.style.height = `${currentPage.clientHeight}px`;
+            console.log("page");
+        } 
+        if (!navTop) {
+            all.style.height = "auto";
+            pageHeight = document.body.scrollHeight;
+            all.style.height = `${pageHeight}px`;
+            pages.forEach(page2 => { page2.style.height = `${pageHeight}px`; });
+            console.log("websitePage");
+        }
+
         console.log("scrollHeight: ", pageHeight);
     }
 });
