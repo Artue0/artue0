@@ -24,6 +24,7 @@ const pages = document.querySelectorAll("#pc-page, #cat-page, #projects-page, #w
 let nextPercentage2 = null;
 let pageHeight = document.body.scrollHeight;
 const all = document.getElementById("all");
+const titles = document.querySelectorAll(".title, .subtitleBottom, .subtitleTop")
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
@@ -206,37 +207,37 @@ icons.forEach(icon => {
 
 function home(clickedElement){
     clickedIcon = document.getElementsByClassName('setup')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, pcPage); }
     if (clickedElement != activeIcon) {nav(-6.5, "home", clickedIcon, pcPage);}
 }
 function about(clickedElement){
     clickedIcon = document.getElementsByClassName('cats')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, catPage); }
     if (clickedElement != activeIcon) {nav(-21, "about", clickedIcon, catPage);}
 }
 function projects(clickedElement){
     clickedIcon = document.getElementsByClassName('projects')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, projectsPage); }
     if (clickedElement != activeIcon) {nav(-35.5, "projects", clickedIcon, projectsPage);}
 }
 function portfolio(clickedElement){
     clickedIcon = document.getElementsByClassName('portfolio')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, websitePage); }
     if (clickedElement != activeIcon) {nav(-50, "portfolio", clickedIcon, websitePage);}
 }
 function contact(clickedElement){
     clickedIcon = document.getElementsByClassName('links')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, linksPage); }
     if (clickedElement != activeIcon) { nav(-64.5, "contact", clickedIcon, linksPage); }
 }
 function music(clickedElement){
     clickedIcon = document.getElementsByClassName('music')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, musicPage); }
     if (clickedElement != activeIcon) {nav(-79, "music", clickedIcon, musicPage);}
 }
 function games(clickedElement){
     clickedIcon = document.getElementsByClassName('games')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon); }
+    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, gamesPage); }
     if (clickedElement != activeIcon) {nav(-93.5, "games", clickedIcon, gamesPage);}
 }
 
@@ -261,6 +262,10 @@ function nav(endValue, id, clickedElement, page) {
     if (!clickedElement.classList.contains('active')) {
         clickedElement.classList.add('active');
     }
+
+    titles.forEach(title => {
+        title.classList.remove('visible');
+    });
 
     if (window.scrollY !== 0) {
         window.scrollTo({
@@ -337,6 +342,10 @@ function nav(endValue, id, clickedElement, page) {
                     pages.forEach(page2 => { page2.style.height = `${page.clientHeight}px`; });
                     all.style.height = `${page.clientHeight}px`;
 
+                    page.querySelectorAll(".title, .subtitleTop, .subtitleBottom").forEach(title => {
+                        title.classList.add('visible');
+                    });
+
                     setTimeout(() => {
                         observe();
                     }, 1000);
@@ -349,12 +358,16 @@ function nav(endValue, id, clickedElement, page) {
     track.dataset.prevPercentage = endValue;
 }
 
-function menu(clickedElement) {
+function menu(clickedElement, page) {
     console.log("menu");
     const button = document.getElementsByClassName('button')[0];
 
     pages.forEach(page2 => { page2.style.height = `${pageHeight}px`; });
     all.style.height = `${pageHeight}px`;
+
+    page.querySelectorAll(".title, .subtitleTop, .subtitleBottom").forEach(title => {
+        title.classList.remove('visible');
+    });
 
     hideIcon = false;
     navTop = false;
