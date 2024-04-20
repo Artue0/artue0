@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
-        console.log("navTop: ", navTop);
-        console.log("activeIcon: ", activeIcon);
+        console.log("pageHeight: ", pageHeight);
+        console.log("linksPage: ", linksPage.style.height);
     });
 
     window.addEventListener('touchmove', function (event) {
