@@ -59,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
         indicator.forEach((pElement) => {
             pElement.style.transform = `translate(${nextPercentage2}%, 0)`;
         });
-        console.log("nextPercentage: ",(nextPercentage - (-6.5)) / (-93.5 - (-6.5)) * (300 - (-300)) + (-300));
 
         const images = track.getElementsByClassName("image");
         for (var image of images) {

@@ -68,7 +68,7 @@ body {
 .container:nth-child(7) { transition-delay: 1400ms; }
 
 #image-track {
-  z-index: 10;
+  z-index: 14;
   display: flex;
   gap: 6vmin;
   position: absolute;
@@ -91,7 +91,7 @@ body {
 }
 
 .fullscreen {
-  z-index: 13;
+  z-index: 14;
   gap: 4vmin;
   position: absolute;
   left: 0%;
