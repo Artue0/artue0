@@ -68,7 +68,7 @@ body {
 .container:nth-child(7) { transition-delay: 1400ms; }
 
 #image-track {
-  z-index: 2;
+  z-index: 10;
   display: flex;
   gap: 6vmin;
   position: absolute;
@@ -91,7 +91,7 @@ body {
 }
 
 .fullscreen {
-  z-index: 3;
+  z-index: 13;
   gap: 4vmin;
   position: absolute;
   left: 0%;
@@ -637,6 +637,8 @@ h2 {
   transform: translateY(-50%);
   font-family: FoundryGridnikRegular;
   user-select: none;
+  display: none;
+  /* color: rgba(white, white, white, 0); */
   /* opacity: 0; */
   /* border: red 2px solid; */
 }

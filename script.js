@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
         indicator.forEach((pElement) => {
             pElement.style.transform = `translate(${nextPercentage2}%, 0)`;
         });
+        console.log("nextPercentage: ",(nextPercentage - (-6.5)) / (-93.5 - (-6.5)) * (300 - (-300)) + (-300));
 
         const images = track.getElementsByClassName("image");
         for (var image of images) {
@@ -84,8 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
-        console.log("pageHeight: ", pageHeight);
-        console.log("linksPage: ", linksPage.style.height);
     });
 
     window.addEventListener('touchmove', function (event) {
@@ -268,26 +267,34 @@ function nav(endValue, id, clickedElement, page) {
             top: 0,
             behavior: 'smooth'
         });
-    }
-    if (savedImage === 0) {
-        startUpdatePercentage();
-    } else {
-        setTimeout(startUpdatePercentage, 1200);
-        savedImage.classList.add('reverseFullscreen');
-        button.classList.remove('slideDown');
-        button.classList.add('slideUp');
-        clickedElement.classList.add("active");
-        navTop = false;
-        setTimeout(function() {
-            savedImage.remove();
-            savedImage = 0;
-        }, 1200);
-        mainPage.classList.add('invisible');
-        pages.forEach(page2 => {
-            page2.childNodes.forEach(child => {
-                if (child.nodeType === 1) {child.classList.add("invisible");}
+        var intervar = setInterval(function() {
+            if (window.scrollY === 0) {
+                clearInterval(intervar);
+                move();
+            }
+        }, 128);
+    } else { move(); }
+    function move() {
+        if (savedImage === 0) {
+            startUpdatePercentage();
+        } else {
+            setTimeout(startUpdatePercentage, 1200);
+            savedImage.classList.add('reverseFullscreen');
+            button.classList.remove('slideDown');
+            button.classList.add('slideUp');
+            clickedElement.classList.add("active");
+            navTop = false;
+            setTimeout(function() {
+                savedImage.remove();
+                savedImage = 0;
+            }, 1200);
+            mainPage.classList.add('invisible');
+            pages.forEach(page2 => {
+                page2.childNodes.forEach(child => {
+                    if (child.nodeType === 1) {child.classList.add("invisible");}
+                });
             });
-        });
+        }
     }
 
     function startUpdatePercentage() {
@@ -296,7 +303,7 @@ function nav(endValue, id, clickedElement, page) {
             track.dataset.percentage = nextPercentage;
             track.style.transform = `translate(${nextPercentage}%, -50%)`;
             indicator.forEach((pElement) => {
-                pElement.style.transform = `translate(${nextPercentage2}%, 0)`;
+                pElement.style.transform = `translate(${((nextPercentage - (-6.5)) / (-93.5 - (-6.5)) * (300 - (-300)) + (-300))*-1}%, 0)`;
             });
 
             const images = track.getElementsByClassName("image");
@@ -344,41 +351,45 @@ function nav(endValue, id, clickedElement, page) {
 
 function menu(clickedElement) {
     console.log("menu");
-    mainPage.classList.remove('invisible');
+    const button = document.getElementsByClassName('button')[0];
 
-    pages.forEach(page2 => {
-        page2.childNodes.forEach(child => {
-            if (child.nodeType === 1) {child.classList.add("invisible");}
-        });
-        page2.style.height = `${pageHeight}px`;
-    });
+    pages.forEach(page2 => { page2.style.height = `${pageHeight}px`; });
     all.style.height = `${pageHeight}px`;
 
     hideIcon = false;
-    const button = document.getElementsByClassName('button')[0];
     navTop = false;
     if (window.scrollY !== 0) {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
+        var intervar = setInterval(function() {
+            if (window.scrollY === 0) {
+                clearInterval(intervar);
+                close();
+            }
+        }, 128);
+    } else { close(); }
+    function close() {
+        pages.forEach(page2 => {
+            page2.childNodes.forEach(child => {
+                if (child.nodeType === 1) {child.classList.add("invisible");}
+            });
+        });
+        if (savedImage) { savedImage.classList.add('reverseFullscreen'); }
+        if (clickedElement) { clickedElement.classList.remove("active"); }
+        button.classList.remove('slideDown');
+        button.classList.add('slideUp');
+        mainPage.classList.remove('invisible');
+        setTimeout(function () {
+            if (savedImage) {
+                savedImage.parentNode.removeChild(savedImage);
+                savedImage = 0;
+            }
+            activeIcon = 0;
+            enableCode = true;
+        }, 1200);
     }
-    if (savedImage) {
-        savedImage.classList.add('reverseFullscreen');
-    }
-    button.classList.remove('slideDown');
-    button.classList.add('slideUp');
-    if (clickedElement) {
-        clickedElement.classList.remove("active");
-    }
-    setTimeout(function () {
-        if (savedImage) {
-            savedImage.parentNode.removeChild(savedImage);
-            savedImage = 0;
-        }
-        activeIcon = 0;
-        enableCode = true;
-    }, 1200);
 }
 
 const observer2 = new IntersectionObserver((entries) => {
