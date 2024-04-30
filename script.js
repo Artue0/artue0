@@ -24,7 +24,7 @@ const pages = document.querySelectorAll("#pc-page, #cat-page, #projects-page, #w
 let nextPercentage2 = null;
 let pageHeight = document.body.scrollHeight;
 const all = document.getElementById("all");
-const titles = document.querySelectorAll(".title, .subtitleBottom, .subtitleTop")
+const titles = document.querySelectorAll(".title, .subtitleBottom, .subtitleTop, .basicText")
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
@@ -96,54 +96,7 @@ function handleImageClick(event) {
     const selectedImage = event.target;
     const rect = selectedImage.getBoundingClientRect();
     const button = document.getElementsByClassName('button')[0];
-    if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
-        imageCopy = selectedImage.cloneNode(true);
-        savedImage = imageCopy;
-        enableCode = !enableCode;
-        document.body.appendChild(imageCopy);
-        imageCopy.classList.add('fullscreen');
-        imageCopy.style.setProperty('--start-x', rect.left + 'px');
-        button.classList.remove('slideUp');
-        button.classList.add('slideDown');
-        navTop = true;
-        imageCopy.style.boxShadow = "none";
-        imageCopy.classList.remove("imageAnim");
-        imageCopy.classList.add("visible");
-        // hideIcon = true;
-        // isMoving = false;
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-    if (selectedImage.classList.contains('button')){
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-        if (window.scrollY === 0) {
-            activeIcon = 0;
-            imageCopy.classList.add('reverseFullscreen');
-            button.classList.remove('slideDown');
-            button.classList.add('slideUp');
-            setTimeout(function() {
-                imageCopy.parentNode.removeChild(imageCopy);
-                enableCode = !enableCode;
-            }, 1200);
 
-            mainPage.classList.remove('invisible');
-            pages.forEach(page2 => {
-                page2.childNodes.forEach(child => {
-                    if (child.nodeType === 1) {child.classList.add("invisible");}
-                });
-            });
-
-            const activeElements = document.querySelectorAll('.active');
-            activeElements.forEach(element => {
-                element.classList.remove('active');
-            });
-        }
-    }
     if (selectedImage.parentNode.classList.contains("icon2") || selectedImage.classList.contains("image")) {
         switch (true) {
             case selectedImage.classList.contains("cPc") || selectedImage.classList.contains("imgSetup"):
@@ -192,6 +145,79 @@ function handleImageClick(event) {
         if ((hideIcon && !isMoving) || selectedImage.classList.contains("image")) {
             activeIcon.classList.add("active");
         }
+    }
+
+    if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        var intervar = setInterval(function() {
+            if (window.scrollY === 0) {
+                clearInterval(intervar);
+                imageCopy = selectedImage.cloneNode(true);
+                savedImage = imageCopy;
+                enableCode = !enableCode;
+                document.body.appendChild(imageCopy);
+                imageCopy.classList.add('fullscreen');
+                imageCopy.style.setProperty('--start-x', rect.left + 'px');
+                button.classList.remove('slideUp');
+                button.classList.add('slideDown');
+                navTop = true;
+                imageCopy.style.boxShadow = "none";
+                imageCopy.classList.remove("imageAnim");
+                imageCopy.classList.add("visible");
+                console.log("page: ", page);
+                page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.classList.add('visible'); });
+
+                if (window.scrollY === 0) { 
+                    page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.style.zIndex = "15"; }); 
+                } else {
+                    setTimeout(function() {
+                        page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.style.zIndex = "15"; });
+                    });
+                }
+            }
+        }, 128);
+    }
+
+    if (selectedImage.classList.contains('button')){
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        var intervar = setInterval(function() {
+            if (window.scrollY === 0) {
+                clearInterval(intervar);
+
+                pages.forEach(page2 => { page2.style.height = `${pageHeight}px`; });
+                all.style.height = `${pageHeight}px`;
+
+                titles.forEach(title => { title.classList.remove('visible'); });
+
+                activeIcon = 0;
+                imageCopy.classList.add('reverseFullscreen');
+                button.classList.remove('slideDown');
+                button.classList.add('slideUp');
+                setTimeout(function() {
+                    imageCopy.parentNode.removeChild(imageCopy);
+                    enableCode = !enableCode;
+                    titles.forEach(title => { title.style.zIndex = "14"; });
+                }, 1200);
+
+                mainPage.classList.remove('invisible');
+                pages.forEach(page2 => {
+                    page2.childNodes.forEach(child => {
+                        if (child.nodeType === 1) {child.classList.add("invisible");}
+                    });
+                });
+
+                const activeElements = document.querySelectorAll('.active');
+                activeElements.forEach(element => {
+                    element.classList.remove('active');
+                });
+            }
+        }, 128);
     }
 }
 
@@ -262,10 +288,6 @@ function nav(endValue, id, clickedElement, page) {
         clickedElement.classList.add('active');
     }
 
-    titles.forEach(title => {
-        title.classList.remove('visible');
-    });
-
     if (window.scrollY !== 0) {
         window.scrollTo({
             top: 0,
@@ -299,9 +321,11 @@ function nav(endValue, id, clickedElement, page) {
                 });
             });
         }
+        titles.forEach(title => { title.classList.remove('visible'); });
     }
 
     function startUpdatePercentage() {
+        titles.forEach(title => { title.style.zIndex = "14"; });
         const updatePercentage = setInterval(() => {
             nextPercentage += increment;
             track.dataset.percentage = nextPercentage;
@@ -341,8 +365,9 @@ function nav(endValue, id, clickedElement, page) {
                     pages.forEach(page2 => { page2.style.height = `${page.clientHeight}px`; });
                     all.style.height = `${page.clientHeight}px`;
 
-                    page.querySelectorAll(".title, .subtitleTop, .subtitleBottom").forEach(title => {
+                    page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => {
                         title.classList.add('visible');
+                        title.style.zIndex = "15";
                     });
 
                     setTimeout(() => {
@@ -353,7 +378,6 @@ function nav(endValue, id, clickedElement, page) {
             }
         });
     }
-    console.log(clickedElement);
     track.dataset.prevPercentage = endValue;
 }
 
@@ -363,10 +387,6 @@ function menu(clickedElement, page) {
 
     pages.forEach(page2 => { page2.style.height = `${pageHeight}px`; });
     all.style.height = `${pageHeight}px`;
-
-    page.querySelectorAll(".title, .subtitleTop, .subtitleBottom").forEach(title => {
-        title.classList.remove('visible');
-    });
 
     hideIcon = false;
     navTop = false;
@@ -383,6 +403,7 @@ function menu(clickedElement, page) {
         }, 128);
     } else { close(); }
     function close() {
+        page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.classList.remove('visible'); });
         pages.forEach(page2 => {
             page2.childNodes.forEach(child => {
                 if (child.nodeType === 1) {child.classList.add("invisible");}
@@ -400,6 +421,7 @@ function menu(clickedElement, page) {
             }
             activeIcon = 0;
             enableCode = true;
+            page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.style.zIndex = "14"; });
         }, 1200);
     }
 }
@@ -484,3 +506,15 @@ window.addEventListener('resize', function() {
         console.log("scrollHeight: ", pageHeight);
     }
 });
+
+function scrollButton(id) {
+    let element = document.getElementById(id);
+    let target = element.offsetTop - element.offsetHeight;
+    console.log("target");
+    if (navTop) {
+        window.scrollTo({
+            top: target,
+            behavior: 'smooth'
+        });
+    }
+}

@@ -514,7 +514,7 @@ h2 {
   font-size: 4rem;
   font-family: Lucida Console, Monospace;
   letter-spacing: 1px;
-  text-align: justify;
+  text-align: left;
   /* border: 2px red solid; */
   transform: translateX(-8%);
   margin-bottom: 25vh;
@@ -708,16 +708,15 @@ h2 {
   left: 0;
   width: 100vw;
   overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
   /* transform: translate(-50%,-50%); */
 }
 
-.basicText {
+.basicText * {
   font-size: 4rem;
   color: white;
   font-family: Lucida Console, Monospace;
-}
-
-.basicText p {
   text-align: left;
 }
 
@@ -764,3 +763,82 @@ h2 {
 
 .link i { width: 20%; }
 .link a { color: white ;}
+
+#about-me, #hi, .about-me-text, .text-container, .see { z-index: 14;}
+
+::selection {
+  color: black;
+  background-color: white;
+}
+
+.bigText {
+  grid-column: 3 / span 5;
+  margin-top: 30vh;
+}
+
+.bigText p {
+  text-align: center;
+  color: white;
+  font-size: 6rem;
+  font-family: FoundryGridnikRegular;
+  font-weight: bold;
+}
+
+.project {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  margin-top: 10vh;
+  margin-bottom: 45vh;
+}
+
+.projectImages {
+  width: 45%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.projectImages img {
+  border: 3px white solid;
+  border-radius: 7px;
+  aspect-ratio: 16/9;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.projectText{
+  width: 40%;
+  margin-left: 5%;
+  font-size: 3rem;
+}
+
+#projectsMenu {
+  position: absolute;
+  left: 50%;
+  top: 80vh;
+  transform: translate(-50%,-50%);
+  width: 600px;
+  aspect-ratio: 8/1;
+  border: 2px solid red;
+  z-index: 15;
+  display: flex;
+  justify-content: space-between;
+}
+
+.projectsMenuButton {
+  height: 100%;
+  width: 30%;
+  background-color: black;
+  color: white;
+  border: 3px solid white;
+  border-radius: 7px;
+  color: white;
+  font-size: 1.5rem;
+  font-family: FoundryGridnikRegular;
+  box-shadow: 0 0 3rem #858585;
+}
+
+.projectsMenuButton:hover {
+  background-color: #222222;
+}
