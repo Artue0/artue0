@@ -25,6 +25,8 @@ let nextPercentage2 = null;
 let pageHeight = document.body.scrollHeight;
 const all = document.getElementById("all");
 const titles = document.querySelectorAll(".title, .subtitleBottom, .subtitleTop, .basicText")
+const buttons = document.querySelectorAll(".projectsMenuButton");
+let showButtons = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
@@ -110,6 +112,7 @@ function handleImageClick(event) {
             case selectedImage.classList.contains("cProjects") || selectedImage.classList.contains("imgProjects"):
                 selectedIcon = document.getElementById("iconProjects").querySelector("i");
                 page = projectsPage;
+                showButtons = true;
                 break;
             case selectedImage.classList.contains("cWebsite") || selectedImage.classList.contains("imgWebsite"):
                 selectedIcon = document.getElementById("iconWebsite").querySelector("i");
@@ -130,13 +133,13 @@ function handleImageClick(event) {
         }
         if (selectedImage.classList.contains("image")){
             pages.forEach(page2 => {
-                page2.childNodes.forEach(child => {
-                    if (child.nodeType === 1) {child.classList.add("invisible");}
+                page2.querySelectorAll('*').forEach(child => {
+                    child.classList.add("invisible");
                 });
             });
             setTimeout(function() {
-                page.childNodes.forEach(child => {
-                    if (child.nodeType === 1) {child.classList.remove("invisible");}
+                page.querySelectorAll('*').forEach(child => {
+                    child.classList.remove("invisible");
                 });
                 mainPage.classList.add('invisible');
             }, 1000);
@@ -170,6 +173,11 @@ function handleImageClick(event) {
                 console.log("page: ", page);
                 page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.classList.add('visible'); });
 
+                setTimeout(function() {
+                    if (showButtons) {buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });}
+                    showButtons = false;
+                }, 1200);
+
                 if (window.scrollY === 0) { 
                     page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.style.zIndex = "15"; }); 
                 } else {
@@ -194,6 +202,7 @@ function handleImageClick(event) {
                 all.style.height = `${pageHeight}px`;
 
                 titles.forEach(title => { title.classList.remove('visible'); });
+                buttons.forEach(projectsButton => { projectsButton.classList.remove('buttonVisible'); });
 
                 activeIcon = 0;
                 imageCopy.classList.add('reverseFullscreen');
@@ -207,8 +216,8 @@ function handleImageClick(event) {
 
                 mainPage.classList.remove('invisible');
                 pages.forEach(page2 => {
-                    page2.childNodes.forEach(child => {
-                        if (child.nodeType === 1) {child.classList.add("invisible");}
+                    page2.querySelectorAll('*').forEach(child => {
+                        child.classList.add("invisible");
                     });
                 });
 
@@ -244,6 +253,7 @@ function projects(clickedElement){
     clickedIcon = document.getElementsByClassName('projects')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon, projectsPage); }
     if (clickedElement != activeIcon) {nav(-35.5, "projects", clickedIcon, projectsPage);}
+    showButtons = true;
 }
 function portfolio(clickedElement){
     clickedIcon = document.getElementsByClassName('portfolio')[0];
@@ -316,12 +326,13 @@ function nav(endValue, id, clickedElement, page) {
             }, 1200);
             mainPage.classList.add('invisible');
             pages.forEach(page2 => {
-                page2.childNodes.forEach(child => {
-                    if (child.nodeType === 1) {child.classList.add("invisible");}
+                page2.querySelectorAll('*').forEach(child => {
+                    child.classList.add("invisible");
                 });
             });
         }
         titles.forEach(title => { title.classList.remove('visible'); });
+        buttons.forEach(projectsButton => { projectsButton.classList.remove('buttonVisible'); });
     }
 
     function startUpdatePercentage() {
@@ -356,8 +367,8 @@ function nav(endValue, id, clickedElement, page) {
                 navTop = true;
                 isMoving = false;
                 setTimeout(function() {
-                    page.childNodes.forEach(child => {
-                        if (child.nodeType === 1) {child.classList.remove("invisible");}
+                    page.querySelectorAll('*').forEach(child => {
+                        child.classList.remove("invisible");
                     });
                     mainPage.classList.add('invisible');
 
@@ -369,6 +380,8 @@ function nav(endValue, id, clickedElement, page) {
                         title.classList.add('visible');
                         title.style.zIndex = "15";
                     });
+                    if (showButtons) {buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });}
+                    showButtons = false;
 
                     setTimeout(() => {
                         observe();
@@ -404,9 +417,10 @@ function menu(clickedElement, page) {
     } else { close(); }
     function close() {
         page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.classList.remove('visible'); });
+        buttons.forEach(projectsButton => { projectsButton.classList.remove('buttonVisible'); });
         pages.forEach(page2 => {
-            page2.childNodes.forEach(child => {
-                if (child.nodeType === 1) {child.classList.add("invisible");}
+            page2.querySelectorAll('*').forEach(child => {
+                child.classList.add("invisible");
             });
         });
         if (savedImage) { savedImage.classList.add('reverseFullscreen'); }
@@ -455,8 +469,8 @@ function observe(){
 observe();
 
 pages.forEach(page2 => {
-    page2.childNodes.forEach(child => {
-        if (child.nodeType === 1) {child.classList.add("invisible");}
+    page2.querySelectorAll('*').forEach(child => {
+        child.classList.add("invisible");
     });
     page2.style.height = `${pageHeight}px`;
 });
