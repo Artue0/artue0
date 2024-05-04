@@ -87,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
+        console.log("showbutton: ", showButtons);
     });
 
     window.addEventListener('touchmove', function (event) {
@@ -174,7 +175,7 @@ function handleImageClick(event) {
                 page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.classList.add('visible'); });
 
                 setTimeout(function() {
-                    if (showButtons) {buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });}
+                    buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });
                     showButtons = false;
                 }, 1200);
 
@@ -205,6 +206,7 @@ function handleImageClick(event) {
                 buttons.forEach(projectsButton => { projectsButton.classList.remove('buttonVisible'); });
 
                 activeIcon = 0;
+                showButtons = false;
                 imageCopy.classList.add('reverseFullscreen');
                 button.classList.remove('slideDown');
                 button.classList.add('slideUp');
@@ -253,7 +255,6 @@ function projects(clickedElement){
     clickedIcon = document.getElementsByClassName('projects')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon, projectsPage); }
     if (clickedElement != activeIcon) {nav(-35.5, "projects", clickedIcon, projectsPage);}
-    showButtons = true;
 }
 function portfolio(clickedElement){
     clickedIcon = document.getElementsByClassName('portfolio')[0];
@@ -279,6 +280,12 @@ function games(clickedElement){
 function nav(endValue, id, clickedElement, page) {
     console.log("nav");
     if(isMoving){return;}
+
+    if (page === projectsPage) {
+        showButtons = true;
+    } else {
+        showButtons = false;
+    }
 
     hideIcon = true;
     isMoving = true;
@@ -380,8 +387,8 @@ function nav(endValue, id, clickedElement, page) {
                         title.classList.add('visible');
                         title.style.zIndex = "15";
                     });
-                    if (showButtons) {buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });}
-                    showButtons = false;
+                    buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });
+                    // showButtons = false;
 
                     setTimeout(() => {
                         observe();
@@ -403,6 +410,8 @@ function menu(clickedElement, page) {
 
     hideIcon = false;
     navTop = false;
+    showButtons = false;
+
     if (window.scrollY !== 0) {
         window.scrollTo({
             top: 0,
@@ -525,7 +534,7 @@ function scrollButton(id) {
     let element = document.getElementById(id);
     let target = element.offsetTop - element.offsetHeight;
     console.log("target");
-    if (navTop) {
+    if (showButtons) {
         window.scrollTo({
             top: target,
             behavior: 'smooth'
