@@ -38,7 +38,7 @@
         <div class="text">GAMES</div>
     </div>          
 </div>
-<h1 class="hidden hidden-up">WELCOME TO MY WEBSITE!</h1>
+<h1 class="hidden hidden-up welcome">WELCOME TO MY WEBSITE!</h1>
 <div id="all">
     <div id="pc-page" class="page">
         <h3 class="title">
@@ -71,7 +71,27 @@
         </h3>
         <div class="websiteText basicText hidden hidden-left"><p>I love cats! They are the cutest and silliest thing in the world and I woudl like to have one.</p></div>
         <div class="websiteText2 basicText hidden hidden-left"><p>Fun fact: This silly goober was a placeholder for all of the images in this website.</p></div>
-        <!-- <div id="catImg"></div> -->
+        <div class="websiteText2 catImg"><img src="assets/2v2.png"></div>
+        <div class="websiteText2 basicText bigText"><p>SILLY CAT TV</p></div>
+        <div class="websiteText2" id="tv">
+            <div class="tvContainer">
+                <img src="assets/tv.png" draggable="false">
+                <video autoplay loop muted id="videoPlayer" style="z-index: -1;">
+            </div>
+            <div id="videoButtonsContainer">
+                <div id="play" onclick="togglePlayPause()">
+                    <i class="fa-solid fa-play fa-2xl" id="playButton"></i>
+                    <i class="fa-solid fa-pause fa-2xl hiddenButton" id="pauseButton"></i>
+                </div>
+                <div id="skip" onclick="changeVideo()">
+                    <i class="fa-solid fa-forward fa-2xl"></i>
+                </div>
+                <div id="volume" onclick="toggleMute()">
+                    <i class="fa-solid fa-volume fa-2xl hiddenButton" id="onButton"></i>
+                    <i class="fa-solid fa-volume-xmark fa-2xl" id="offButton"></i>
+                </div>            
+            </div>
+        </div>
     </div>
     <div id="projects-page" class="page">
         <h3 class="title">
@@ -230,7 +250,7 @@
         <h2 class="see hidden hidden-up">WHAT WOUDL YOU LIKE TO SEE?</h2>
         <div id="bar">
             <div class="container hidden hidden-blur">
-                <div class="icon2" onclick="home(document.getElementById('iconPc'))">
+                <div class="icon2" onclick="home(null)">
                     <i class="fa-solid fa-computer fa-2xl cPc"></i>
                 </div>
                 <div class="text-container">
@@ -295,10 +315,7 @@
         </div>
 
         <h3 id="about-me" class="hidden hidden-blur">-ABOUT ME-</h3>
-        <h3 id="hi" class="hidden hidden-blur">
-            Hi! I'm Artur and i like making cool stuff like this website.
-            <i class="fa-solid fa-hand-wave fa-2xl hand hidden"></i>
-        </h3>
+        <h3 id="hi" class="hidden hidden-blur">Hi! I'm Artur and i like making cool stuff like this website.</h3>
         <h3 class="game-dev about-me-text hidden hidden-left">
             I like playing games
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque feugiat lectus augue, et laoreet sem dignissim vel. In hac habitasse platea dictumst.</p>

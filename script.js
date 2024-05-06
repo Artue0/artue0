@@ -25,6 +25,7 @@ let nextPercentage2 = null;
 let pageHeight = document.body.scrollHeight;
 const all = document.getElementById("all");
 const titles = document.querySelectorAll(".title, .subtitleBottom, .subtitleTop, .basicText")
+const visibleElements = ".title, .subtitleTop, .subtitleBottom, .basicText, .link, .pcPart, .welcome, .see, #tv, #videoButtonsContainer";
 const buttons = document.querySelectorAll(".projectsMenuButton");
 let showButtons = false;
 
@@ -109,6 +110,7 @@ function handleImageClick(event) {
             case selectedImage.classList.contains("cCats") || selectedImage.classList.contains("imgCats"):
                 selectedIcon = document.getElementById("iconCats").querySelector("i");
                 page = catPage;
+                togglePlayPause();
                 break;
             case selectedImage.classList.contains("cProjects") || selectedImage.classList.contains("imgProjects"):
                 selectedIcon = document.getElementById("iconProjects").querySelector("i");
@@ -172,7 +174,7 @@ function handleImageClick(event) {
                 imageCopy.classList.remove("imageAnim");
                 imageCopy.classList.add("visible");
                 console.log("page: ", page);
-                page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.classList.add('visible'); });
+                page.querySelectorAll(visibleElements).forEach(title => { title.classList.add('visible'); });
 
                 setTimeout(function() {
                     buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });
@@ -180,10 +182,10 @@ function handleImageClick(event) {
                 }, 1200);
 
                 if (window.scrollY === 0) { 
-                    page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.style.zIndex = "15"; }); 
+                    page.querySelectorAll(visibleElements).forEach(title => { title.style.zIndex = "15"; }); 
                 } else {
                     setTimeout(function() {
-                        page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.style.zIndex = "15"; });
+                        page.querySelectorAll(visibleElements).forEach(title => { title.style.zIndex = "15"; });
                     });
                 }
             }
@@ -250,6 +252,7 @@ function about(clickedElement){
     clickedIcon = document.getElementsByClassName('cats')[0];
     if (clickedElement === activeIcon && navTop) { menu(clickedIcon, catPage); }
     if (clickedElement != activeIcon) {nav(-21, "about", clickedIcon, catPage);}
+    togglePlayPause();
 }
 function projects(clickedElement){
     clickedIcon = document.getElementsByClassName('projects')[0];
@@ -383,12 +386,11 @@ function nav(endValue, id, clickedElement, page) {
                     pages.forEach(page2 => { page2.style.height = `${page.clientHeight}px`; });
                     all.style.height = `${page.clientHeight}px`;
 
-                    page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => {
+                    page.querySelectorAll(visibleElements).forEach(title => {
                         title.classList.add('visible');
                         title.style.zIndex = "15";
                     });
                     buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });
-                    // showButtons = false;
 
                     setTimeout(() => {
                         observe();
@@ -425,7 +427,7 @@ function menu(clickedElement, page) {
         }, 128);
     } else { close(); }
     function close() {
-        page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.classList.remove('visible'); });
+        page.querySelectorAll(visibleElements).forEach(title => { title.classList.remove('visible'); });
         buttons.forEach(projectsButton => { projectsButton.classList.remove('buttonVisible'); });
         pages.forEach(page2 => {
             page2.querySelectorAll('*').forEach(child => {
@@ -444,7 +446,7 @@ function menu(clickedElement, page) {
             }
             activeIcon = 0;
             enableCode = true;
-            page.querySelectorAll(".title, .subtitleTop, .subtitleBottom, .basicText").forEach(title => { title.style.zIndex = "14"; });
+            page.querySelectorAll(visibleElements).forEach(title => { title.style.zIndex = "14"; });
         }, 1200);
     }
 }
@@ -541,3 +543,63 @@ function scrollButton(id) {
         });
     }
 }
+
+const video = document.getElementById('videoPlayer');
+const play = document.getElementById('playButton');
+const pause = document.getElementById('pauseButton');
+const on = document.getElementById('onButton');
+const off = document.getElementById('offButton');
+const videos = [
+  'assets/videos/1.mp4',
+  'assets/videos/2.mp4',
+  'assets/videos/3.mov',
+  'assets/videos/4.mov',
+  'assets/videos/5.mov',
+  'assets/videos/6.mov',
+  'assets/videos/7.mov',
+  'assets/videos/8.mov',
+  'assets/videos/9.mov',
+  'assets/videos/10.mov',
+  'assets/videos/11.mov',
+  'assets/videos/12.mp4',
+];
+
+function togglePlayPause() {
+    if (video.paused) {
+        video.play();
+        play.classList.remove('hiddenButton');
+        pause.classList.add('hiddenButton');
+    } else {
+        video.pause();
+        pause.classList.remove('hiddenButton');
+        play.classList.add('hiddenButton');
+    }
+}
+        
+var lastVideoIndex = -1;
+
+function changeVideo() {
+  var randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * videos.length);
+    } while (randomIndex === lastVideoIndex);
+
+    lastVideoIndex = randomIndex;
+    video.src = videos[randomIndex];
+    video.load();
+    video.play();
+}
+
+function toggleMute() {
+    if (video.muted) {
+        on.classList.remove('hiddenButton');
+        off.classList.add('hiddenButton');
+    } else {
+        off.classList.remove('hiddenButton');
+        on.classList.add('hiddenButton');
+    }
+    video.muted = !video.muted;
+}
+        
+changeVideo();
+togglePlayPause();
