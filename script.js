@@ -28,6 +28,7 @@ const titles = document.querySelectorAll(".title, .subtitleBottom, .subtitleTop,
 const visibleElements = ".title, .subtitleTop, .subtitleBottom, .basicText, .link, .pcPart, .welcome, .see, #tv, #videoButtonsContainer";
 const buttons = document.querySelectorAll(".projectsMenuButton");
 let showButtons = false;
+let rect2, imageID;
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
@@ -88,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
-        console.log("showbutton: ", showButtons);
     });
 
     window.addEventListener('touchmove', function (event) {
@@ -177,8 +177,10 @@ function handleImageClick(event) {
                 page.querySelectorAll(visibleElements).forEach(title => { title.classList.add('visible'); });
 
                 setTimeout(function() {
-                    buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });
-                    showButtons = false;
+                    buttons.forEach(projectsButton => { 
+                        projectsButton.classList.add('buttonVisible');
+                        projectsButton.classList.remove('buttonInvisible');
+                     });
                 }, 1200);
 
                 if (window.scrollY === 0) { 
@@ -205,13 +207,18 @@ function handleImageClick(event) {
                 all.style.height = `${pageHeight}px`;
 
                 titles.forEach(title => { title.classList.remove('visible'); });
-                buttons.forEach(projectsButton => { projectsButton.classList.remove('buttonVisible'); });
+                buttons.forEach(projectsButton => { 
+                    projectsButton.classList.remove('buttonVisible');
+                    projectsButton.classList.add('buttonInvisible');
+                 });
 
                 activeIcon = 0;
                 showButtons = false;
+                savedImage = 0;
                 imageCopy.classList.add('reverseFullscreen');
                 button.classList.remove('slideDown');
                 button.classList.add('slideUp');
+                pauseVideo();
                 setTimeout(function() {
                     imageCopy.parentNode.removeChild(imageCopy);
                     enableCode = !enableCode;
@@ -284,12 +291,6 @@ function nav(endValue, id, clickedElement, page) {
     console.log("nav");
     if(isMoving){return;}
 
-    if (page === projectsPage) {
-        showButtons = true;
-    } else {
-        showButtons = false;
-    }
-
     hideIcon = true;
     isMoving = true;
     enableCode = false;
@@ -342,7 +343,10 @@ function nav(endValue, id, clickedElement, page) {
             });
         }
         titles.forEach(title => { title.classList.remove('visible'); });
-        buttons.forEach(projectsButton => { projectsButton.classList.remove('buttonVisible'); });
+        buttons.forEach(projectsButton => { 
+            projectsButton.classList.remove('buttonVisible');
+            projectsButton.classList.add('buttonInvisible');
+         });
     }
 
     function startUpdatePercentage() {
@@ -363,7 +367,9 @@ function nav(endValue, id, clickedElement, page) {
             if ((increment > 0 && nextPercentage >= endValue) || (increment < 0 && nextPercentage <= endValue)) {
                 clearInterval(updatePercentage);
                 const image = document.getElementById(id);
-                const rect = image.getBoundingClientRect();
+                imageID = image;
+                rect2 = image.getBoundingClientRect();
+                console.log("correct rect2: ", rect2.left);
                 imageCopy = image.cloneNode(true);
                 imageCopy.style.boxShadow = "none";
                 imageCopy.classList.remove("imageAnim");
@@ -371,11 +377,12 @@ function nav(endValue, id, clickedElement, page) {
                 savedImage = imageCopy;
                 document.body.appendChild(imageCopy);
                 imageCopy.classList.add('fullscreen');
-                imageCopy.style.setProperty('--start-x', rect.left + 'px');
+                imageCopy.style.setProperty('--start-x', rect2.left + 'px');
                 button.classList.remove('slideUp');
                 button.classList.add('slideDown');
                 navTop = true;
                 isMoving = false;
+                if (page != catPage) { pauseVideo(); }
                 setTimeout(function() {
                     page.querySelectorAll('*').forEach(child => {
                         child.classList.remove("invisible");
@@ -390,7 +397,16 @@ function nav(endValue, id, clickedElement, page) {
                         title.classList.add('visible');
                         title.style.zIndex = "15";
                     });
-                    buttons.forEach(projectsButton => { projectsButton.classList.add('buttonVisible'); });
+                    buttons.forEach(projectsButton => { 
+                        projectsButton.classList.add('buttonVisible'); 
+                        projectsButton.classList.remove('buttonInvisible');
+                    });
+
+                    if (page === projectsPage) {
+                        showButtons = true;
+                    } else {
+                        showButtons = false;
+                    }
 
                     setTimeout(() => {
                         observe();
@@ -402,6 +418,14 @@ function nav(endValue, id, clickedElement, page) {
     }
     track.dataset.prevPercentage = endValue;
 }
+
+window.addEventListener('resize', function() {
+    if (imageID != null){
+        rect2 = imageID.getBoundingClientRect();
+        imageCopy.style.setProperty('--start-x', rect2.left + 'px');
+        console.log("rect2: ", rect2.left);
+    }
+});
 
 function menu(clickedElement, page) {
     console.log("menu");
@@ -428,7 +452,10 @@ function menu(clickedElement, page) {
     } else { close(); }
     function close() {
         page.querySelectorAll(visibleElements).forEach(title => { title.classList.remove('visible'); });
-        buttons.forEach(projectsButton => { projectsButton.classList.remove('buttonVisible'); });
+        buttons.forEach(projectsButton => { 
+            projectsButton.classList.remove('buttonVisible');
+            projectsButton.classList.add('buttonInvisible');
+         });
         pages.forEach(page2 => {
             page2.querySelectorAll('*').forEach(child => {
                 child.classList.add("invisible");
@@ -446,6 +473,7 @@ function menu(clickedElement, page) {
             }
             activeIcon = 0;
             enableCode = true;
+            resizeNormal();
             page.querySelectorAll(visibleElements).forEach(title => { title.style.zIndex = "14"; });
         }, 1200);
     }
@@ -521,16 +549,19 @@ window.addEventListener('resize', function() {
             console.log("page");
         } 
         if (!navTop) {
-            all.style.height = "auto";
-            pageHeight = document.body.scrollHeight;
-            all.style.height = `${pageHeight}px`;
-            pages.forEach(page2 => { page2.style.height = `${pageHeight}px`; });
-            console.log("websitePage");
+            resizeNormal();
         }
 
         console.log("scrollHeight: ", pageHeight);
     }
 });
+function resizeNormal() {
+    all.style.height = "auto";
+    pageHeight = document.body.scrollHeight;
+    all.style.height = `${pageHeight}px`;
+    pages.forEach(page2 => { page2.style.height = `${pageHeight}px`; });
+    console.log("websitePage");
+}
 
 function scrollButton(id) {
     let element = document.getElementById(id);
@@ -575,7 +606,13 @@ function togglePlayPause() {
         play.classList.add('hiddenButton');
     }
 }
-        
+
+function pauseVideo() {
+    video.pause();
+    pause.classList.remove('hiddenButton');
+    play.classList.add('hiddenButton');
+}
+
 var lastVideoIndex = -1;
 
 function changeVideo() {
@@ -603,3 +640,7 @@ function toggleMute() {
         
 changeVideo();
 togglePlayPause();
+
+function getRect(e) {
+    return e.getBoundingClientRect();
+}

@@ -69,24 +69,24 @@
             <div class="subtitleTop">CUTE</div>
             -CATS-
         </h3>
-        <div class="websiteText basicText hidden hidden-left"><p>I love cats! They are the cutest and silliest thing in the world and I woudl like to have one.</p></div>
+        <div class="websiteText basicText hidden hidden-left"><p>I love cats! They are the cutest and silliest thing in the world and I would like to have one.</p></div>
         <div class="websiteText2 basicText hidden hidden-left"><p>Fun fact: This silly goober was a placeholder for all of the images in this website.</p></div>
-        <div class="websiteText2 catImg"><img src="assets/2v2.png"></div>
-        <div class="websiteText2 basicText bigText"><p>SILLY CAT TV</p></div>
-        <div class="websiteText2" id="tv">
+        <div class="websiteText2 catImg hidden hidden-left"><img src="assets/2v2.png"></div>
+        <div class="websiteText2 basicText bigText hidden hidden-blur"><p>SILLY CAT TV</p></div>
+        <div class="websiteText2 hidden hidden-blur" id="tv">
             <div class="tvContainer">
                 <img src="assets/tv.png" draggable="false">
                 <video autoplay loop muted id="videoPlayer" style="z-index: -1;">
             </div>
             <div id="videoButtonsContainer">
-                <div id="play" onclick="togglePlayPause()">
+                <div id="play" onclick="togglePlayPause()" class="hidden hidden-up">
                     <i class="fa-solid fa-play fa-2xl" id="playButton"></i>
                     <i class="fa-solid fa-pause fa-2xl hiddenButton" id="pauseButton"></i>
                 </div>
-                <div id="skip" onclick="changeVideo()">
+                <div id="skip" onclick="changeVideo()" class="hidden hidden-up" style="transition-delay: 200ms;">
                     <i class="fa-solid fa-forward fa-2xl"></i>
                 </div>
-                <div id="volume" onclick="toggleMute()">
+                <div id="volume" onclick="toggleMute()" class="hidden hidden-up" style="transition-delay: 400ms;">
                     <i class="fa-solid fa-volume fa-2xl hiddenButton" id="onButton"></i>
                     <i class="fa-solid fa-volume-xmark fa-2xl" id="offButton"></i>
                 </div>            
@@ -239,6 +239,17 @@
             -MUSIC-
             <div class="subtitleBottom">I LISTEN TO</div>
         </h3>
+        <div class="websiteText basicText hidden hidden-left"><p>I listen to instrumental/electronic music, mostly to chiptune from video games. I havn't ever created music, but I would really like to.</p></div>
+        <div class="websiteText2 basicText hidden hidden-left"><p>Here are some of my favorite soundtracks from video games:</p></div>
+        <div class="websiteText2 basicText project">
+            <div class="projectImages hidden hidden-left">
+                <img src="assets/2v2.png">
+            </div>
+            <div class="projectText basicText hidden hidden-right">
+                This is my first significant game that I made in GMS2. It's not finished; I had a big concept for it, but I wasn't able to find the courage to fully develop it.
+                <br><br> It was supposed to be a roguelike game inspired by Enter the Gungeon, featuring procedural dungeons.
+            </div>
+        </div> 
     </div>
     <div id="games-page" class="page">
         <h3 class="title">
