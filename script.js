@@ -30,6 +30,7 @@ const buttons = document.querySelectorAll(".projectsMenuButton");
 let showButtons = false;
 let rect2, imageID;
 let clickedImage = false;
+let isClicked = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
@@ -90,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     window.addEventListener('mousemove', function (event) {
         handleOnMove(event);
+        console.log("isClicked: ", isClicked);
     });
 
     window.addEventListener('touchmove', function (event) {
@@ -254,39 +256,39 @@ icons.forEach(icon => {
 
 function home(clickedElement){
     clickedIcon = document.getElementsByClassName('setup')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, pcPage); }
-    if (clickedElement != activeIcon) {nav(-6.5, "home", clickedIcon, pcPage);}
+    if (clickedElement === activeIcon && navTop && !isClicked) { menu(clickedIcon, pcPage); }
+    if (clickedElement != activeIcon && !isClicked) {nav(-6.5, "home", clickedIcon, pcPage);}
 }
 function about(clickedElement){
     clickedIcon = document.getElementsByClassName('cats')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, catPage); }
-    if (clickedElement != activeIcon) {nav(-21, "about", clickedIcon, catPage);}
+    if (clickedElement === activeIcon && navTop && !isClicked) { menu(clickedIcon, catPage); }
+    if (clickedElement != activeIcon && !isClicked) {nav(-21, "about", clickedIcon, catPage);}
     togglePlayPause();
 }
 function projects(clickedElement){
     clickedIcon = document.getElementsByClassName('projects')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, projectsPage); }
-    if (clickedElement != activeIcon) {nav(-35.5, "projects", clickedIcon, projectsPage);}
+    if (clickedElement === activeIcon && navTop && !isClicked) { menu(clickedIcon, projectsPage); }
+    if (clickedElement != activeIcon && !isClicked) {nav(-35.5, "projects", clickedIcon, projectsPage);}
 }
 function portfolio(clickedElement){
     clickedIcon = document.getElementsByClassName('portfolio')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, websitePage); }
-    if (clickedElement != activeIcon) {nav(-50, "portfolio", clickedIcon, websitePage);}
+    if (clickedElement === activeIcon && navTop && !isClicked) { menu(clickedIcon, websitePage); }
+    if (clickedElement != activeIcon && !isClicked) {nav(-50, "portfolio", clickedIcon, websitePage);}
 }
 function contact(clickedElement){
     clickedIcon = document.getElementsByClassName('links')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, linksPage); }
-    if (clickedElement != activeIcon) { nav(-64.5, "contact", clickedIcon, linksPage); }
+    if (clickedElement === activeIcon && navTop && !isClicked) { menu(clickedIcon, linksPage); }
+    if (clickedElement != activeIcon && !isClicked) { nav(-64.5, "contact", clickedIcon, linksPage); }
 }
 function music(clickedElement){
     clickedIcon = document.getElementsByClassName('music')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, musicPage); }
-    if (clickedElement != activeIcon) {nav(-79, "music", clickedIcon, musicPage);}
+    if (clickedElement === activeIcon && navTop && !isClicked) { menu(clickedIcon, musicPage); }
+    if (clickedElement != activeIcon && !isClicked) {nav(-79, "music", clickedIcon, musicPage);}
 }
 function games(clickedElement){
     clickedIcon = document.getElementsByClassName('games')[0];
-    if (clickedElement === activeIcon && navTop) { menu(clickedIcon, gamesPage); }
-    if (clickedElement != activeIcon) {nav(-93.5, "games", clickedIcon, gamesPage);}
+    if (clickedElement === activeIcon && navTop && !isClicked) { menu(clickedIcon, gamesPage); }
+    if (clickedElement != activeIcon && !isClicked) {nav(-93.5, "games", clickedIcon, gamesPage);}
 }
 
 function nav(endValue, id, clickedElement, page) {
@@ -310,6 +312,10 @@ function nav(endValue, id, clickedElement, page) {
     if (!clickedElement.classList.contains('active')) {
         clickedElement.classList.add('active');
     }
+
+    isClicked = true;
+    console.log("isClicked = true;");
+    setTimeout(function() { isClicked = false; }, 1200);
 
     if (window.scrollY !== 0) {
         window.scrollTo({

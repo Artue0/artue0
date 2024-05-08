@@ -150,6 +150,7 @@ body {
   margin-bottom: 5vh;
   margin-top: 100vh;
   user-select: auto;
+  font-size: 8vmin;
 }
 
 #bar {
@@ -501,7 +502,7 @@ h2 {
   display: flex;
   justify-content: center;
   color: white;
-  font-size: 6rem;
+  font-size: 8vmin;
   font-family: FoundryGridnikRegular;
   margin-bottom: 5vh;
 }
@@ -509,25 +510,26 @@ h2 {
 #hi {
   grid-column: 2 / span 7;
   color: white;
-  font-size: 4rem;
+  font-size: 5vmin;
   font-family: Lucida Console, Monospace;
   letter-spacing: 1px;
   text-align: left;
-  /* border: 2px red solid; */
   margin-bottom: 25vh;
 }
 
 .about-me-text {
   color: white;
-  font-size: 6rem;
+  font-size: 8vmin;
   font-family: FoundryGridnikRegular;
   text-align: start;
+  font-weight: bold;
 }
 
 .about-me-text p {
-  font-size: 3rem;
+  font-size: 5vmin;
   font-family: Lucida Console, Monospace;
   text-align: start;
+  font-weight: lighter;
 }
 
 .game-dev {grid-column: 2 / span 5;}
@@ -569,14 +571,15 @@ h2 {
 
   #bar {
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: auto auto auto;
     grid-template-rows: auto auto auto;
     justify-content: center;
     align-items: center;
     height: 500px;
   }
   
-  .container {grid-column: auto;}
+  .container { grid-column: auto; }
+  .seventh { grid-column: 2; }
   
   .cGames {
     grid-column: 2 / span 1;
@@ -584,17 +587,13 @@ h2 {
   }
 }
 
-@media screen and (max-width: 1285px) {h1 { font-size: 5rem;} }
-@media screen and (max-width: 1080px) {h1 { font-size: 4rem;}}
-/* @media screen and (max-width: 525px) {h1 { font-size: 4rem; }} */
-
 .title {
   z-index: 14;
   display: flex;
   justify-content: center;
   color: white;
   width: 100vw;
-  font-size: 10rem;
+  font-size: 14vmin;
   position: absolute;
   top: 50vh;
   transform: translateY(-50%);
@@ -606,7 +605,7 @@ h2 {
 }
 
 .subtitleTop, .subtitleBottom {
-  font-size: 4rem;
+  font-size: 8vmin;
   color: white;
   font-family: Lucida Console, Monospace;
   position: absolute;
@@ -662,7 +661,7 @@ h2 {
 #indicator p {
   color: white;
   font-family: Lucida Console, Monospace;
-  font-size: 2.5rem;
+  font-size: 4vmin;
   min-width: 40vmin;
   user-select: none;
   pointer-events: none;
@@ -697,13 +696,6 @@ h2 {
 
 .websiteText a, .websiteText2 a { color: white; }
 
-.basicText * {
-  font-size: 4rem;
-  color: white;
-  font-family: Lucida Console, Monospace;
-  text-align: left;
-}
-
 #linksContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -724,7 +716,7 @@ h2 {
   font-family: Lucida Console, Monospace;
 }
 
-.link i { width: 20%; }
+.link i { transform: scale(1vmin); }
 .link a { color: white ;}
 
 
@@ -750,7 +742,7 @@ h2 {
 .bigText p {
   text-align: center;
   color: white;
-  font-size: 6rem;
+  font-size: 7vmin;
   font-family: FoundryGridnikRegular;
   font-weight: bold;
 }
@@ -890,6 +882,12 @@ h2 {
 #play i { left: 35%; }
 #skip i { left: 25%; }
 #volume i { left: 20%; }
+.basicText * {
+  font-size: 5vmin;
+  color: white;
+  font-family: Lucida Console, Monospace;
+  text-align: left;
+}
 
 .hiddenButton { color: rgba(0, 0, 0, 0); }
 
@@ -953,4 +951,19 @@ h2 {
   gap: 5vmin;
   margin-top: 20vh;
   margin-bottom: 20vh;
+}
+
+.videoGame {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: row;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+  grid-column: 1 / span 9;
+}
+
+.videoGameText {
+  width: 30%;
+  font-size: 5vmin;
 }
