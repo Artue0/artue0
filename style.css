@@ -149,6 +149,7 @@ body {
 .see {
   margin-bottom: 5vh;
   margin-top: 100vh;
+  user-select: auto;
 }
 
 #bar {
@@ -210,17 +211,12 @@ body {
 
 h1 {
   z-index: 3;
-  /* display: flex;
-  justify-content: center; */
   color: white;
   width: 100vw;
   font-size: 6rem;
   position: absolute;
-  /* left: 50%; */
   top: 10vh;
   font-family: FoundryGridnikRegular;
-  user-select: none;
-  /* border: red 2px solid; */
 }
 
 h2 {
@@ -350,6 +346,7 @@ h2 {
   top: 93vh;
   transform: translateX(-125%);
   animation: arrow 6s infinite;
+  pointer-events: none;
   /* border: 2px green solid; */
 }
 
@@ -431,6 +428,7 @@ h2 {
   position: absolute;
   left: 60%;
   top: 92vh;
+  pointer-events: none;
 }
 
 .animation2 i{
@@ -586,14 +584,9 @@ h2 {
   }
 }
 
-@media screen and (max-width: 1285px) {h1 {font-size: 5rem;}}
-@media screen and (max-width: 1080px) {h1 {margin-top: 6vh;}}
-@media screen and (max-width: 525px) {
-  h1 {
-    font-size: 4rem;
-    margin-top: 8vh;
-  }
-}
+@media screen and (max-width: 1285px) {h1 { font-size: 5rem;} }
+@media screen and (max-width: 1080px) {h1 { font-size: 4rem;}}
+/* @media screen and (max-width: 525px) {h1 { font-size: 4rem; }} */
 
 .title {
   z-index: 14;
@@ -672,6 +665,7 @@ h2 {
   font-size: 2.5rem;
   min-width: 40vmin;
   user-select: none;
+  pointer-events: none;
   /* border: red 3px solid; */
 }
 
@@ -686,14 +680,9 @@ h2 {
   /* transform: translate(-50%,-50%); */
 }
 
-.basicText * {
-  font-size: 4rem;
-  color: white;
-  font-family: Lucida Console, Monospace;
-  text-align: left;
+.websiteText, .websiteText2, .websiteText3 {
+  grid-column: 3 / span 5;
 }
-
-.websiteText, .websiteText2, .websiteText3 { grid-column: 3 / span 5; }
 
 .websiteText { margin-top: 150vh; }
 
@@ -708,6 +697,12 @@ h2 {
 
 .websiteText a, .websiteText2 a { color: white; }
 
+.basicText * {
+  font-size: 4rem;
+  color: white;
+  font-family: Lucida Console, Monospace;
+  text-align: left;
+}
 
 #linksContainer {
   display: grid;
@@ -760,12 +755,12 @@ h2 {
   font-weight: bold;
 }
 
-.project {
-  width: 100vw;
+.project, .soundtrack {
   display: flex;
   align-items: center;
   margin-top: 10vh;
   margin-bottom: 45vh;
+  grid-column: 1 / span 9;
 }
 
 .projectImages {
@@ -833,10 +828,6 @@ h2 {
   transform: translateY(0);
 }
 
-.projectMain {
-  grid-column: 4 / span 3;
-}
-
 .catImg {
   border: 5px white solid;
   border-radius: 7px;
@@ -901,3 +892,57 @@ h2 {
 #volume i { left: 20%; }
 
 .hiddenButton { color: rgba(0, 0, 0, 0); }
+
+.soundtrackImage {
+  width: 40vmin;
+  height: 40vmin;
+  border: white 5px solid;
+  border-radius: 7px;
+  position: relative;
+}
+
+.soundtrackText {
+  position: absolute;
+  left: 50%;
+  top: -15%;
+  transform: translate(-50%,-50%);
+  font-family: FoundryGridnikRegular;
+  font-weight: bold;
+  font-size: 7vmin;
+  padding: 0;
+  margin: 0;
+}
+
+.soundtrackImage img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.soundtrackAudio {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.audioContainer { position: relative; }
+
+.audioContainer h3 {
+  position: absolute;
+  left: 50%;
+  top: -20%;
+  transform: translate(-50%,-50%);
+  color: white;
+  font-size: 2rem;
+  font-family: Lucida Console, Monospace;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.soundtrack {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+}

@@ -29,6 +29,7 @@ const visibleElements = ".title, .subtitleTop, .subtitleBottom, .basicText, .lin
 const buttons = document.querySelectorAll(".projectsMenuButton");
 let showButtons = false;
 let rect2, imageID;
+let clickedImage = false;
 
 document.addEventListener('DOMContentLoaded', function () {
     var track = document.getElementById("image-track");
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
 
     const handleOnMove = function (event) {
-        if (track.dataset.mouseDownAt === "0" || !enableCode) return;
+        if (track.dataset.mouseDownAt === "0" || !enableCode || clickedImage) return;
 
         const mouseDelta = parseFloat(track.dataset.mouseDownAt) - event.clientX;
         const maxDelta = window.innerWidth;
@@ -154,6 +155,7 @@ function handleImageClick(event) {
     }
 
     if (selectedImage.classList.contains('image') && !selectedImage.classList.contains('fullscreen') && enableCode){
+        clickedImage = true;
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
@@ -192,7 +194,7 @@ function handleImageClick(event) {
                 }
             }
         }, 128);
-    }
+    } else { clickedImage = false; }
 
     if (selectedImage.classList.contains('button')){
         window.scrollTo({
